@@ -1,0 +1,46 @@
+body {
+  background-color: #111;
+  color: white;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  margin-top: 100px;
+}
+
+button {
+  background-color: pink;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 20px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ff6f91;
+  color: white;
+}
+
+.heart {
+  position: fixed;
+  font-size: 22px;
+  animation: float 3s linear forwards;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100vh) scale(0.5);
+    opacity: 0;
+  }
+}
