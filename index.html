@@ -11,6 +11,7 @@
       color: #fff;
       text-align: center;
       padding: 50px;
+      overflow: hidden;
     }
 
     h1 {
@@ -70,16 +71,21 @@
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
 
-    // No button moves randomly
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * window.innerWidth * 0.6;
-      const y = Math.random() * window.innerHeight * 0.6;
+    function moveNoButton() {
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 50);
       noBtn.style.position = "absolute";
       noBtn.style.left = `${x}px`;
       noBtn.style.top = `${y}px`;
-    });
+    }
 
-    // Yes button redirects to next page
+    // Move on hover
+    noBtn.addEventListener("mouseover", moveNoButton);
+
+    // Move on click too 😁
+    noBtn.addEventListener("click", moveNoButton);
+
+    // Yes button redirects
     yesBtn.addEventListener("click", () => {
       window.location.href = "yes.html";
     });
