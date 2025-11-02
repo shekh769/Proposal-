@@ -1,22 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Proposal 💖</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposal 💖</title>
+<style>
+    body {
+        background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+        color: white;
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+        padding: 50px;
+        animation: fadeIn 2s ease-in;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 20px;
+        line-height: 1.8;
+        margin-bottom: 30px;
+    }
+
+    .buttons {
+        margin-top: 20px;
+    }
+
+    button {
+        background-color: white;
+        color: #ff1493;
+        border: none;
+        padding: 12px 25px;
+        margin: 10px;
+        font-size: 18px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background-color: #ff69b4;
+        color: white;
+        transform: scale(1.1);
+    }
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Seema, I Love You 🥰</h1>
-    <p>Kya tum mujhe pasand karti ho?</p>
 
-    <div class="buttons">
-      <button id="yes">Yes 💕</button>
-      <button id="no">No 😜</button>
-    </div>
-  </div>
+<h1>Kya tum mujhse pyaar karti ho? 💞</h1>
 
-  <script src="script.js"></script>
+<h2>
+    Fizao mein Mehka shaam ho tum<br>
+    Pyaar mein Jhalakta jaam ho tum<br>
+    Seene mein chhupaye phirte hain hum tumhari yaadein<br>
+    Is liye meri zindagi ka doosra naam ho tum ❤️
+</h2>
+
+<div class="buttons">
+    <button onclick="yesClicked()">Yes ❤️</button>
+    <button onclick="noClicked()">No 💔</button>
+</div>
+
+<script>
+function yesClicked() {
+    window.location.href = "yes.html";
+}
+
+function noClicked() {
+    alert("Soch lo phir se 😅💔");
+}
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dua Qubool 💞</title>
+<style>
+    body {
+        background: radial-gradient(circle, #ffb6c1, #ff1493);
+        color: white;
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+        padding-top: 120px;
+        animation: fadeIn 2s ease-in-out;
+    }
+
+    h1 {
+        font-size: 26px;
+        line-height: 1.8;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+<body>
+
+<h1>
+    Ab lagta hai duaayein qubool ho gayi,<br>
+    jise chaaha tha dil se, wo ab meri ho gayi 💞
+</h1>
+
 </body>
 </html>
