@@ -1,0 +1,93 @@
+/* style.css */
+:root{
+  --bg1:#0f1720;
+  --bg2:#1f2937;
+  --accent:#ff4e88;
+  --accent2:#ffd1dc;
+  --glass: rgba(255,255,255,0.06);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg1),var(--bg2));font-family:'Poppins',sans-serif;color:#fff}
+
+.scene{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  padding:30px;
+}
+
+/* subtle soft lights */
+.lights{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(600px 300px at 10% 20%, rgba(255,94,142,0.06), transparent 10%),
+    radial-gradient(700px 350px at 90% 80%, rgba(255,208,220,0.05), transparent 10%);
+  pointer-events:none;
+  mix-blend-mode:screen;
+}
+
+/* hearts container (absolute) */
+#hearts{position:absolute;inset:0;pointer-events:none;}
+
+/* main card */
+.card{
+  width:min(760px,94%);
+  max-width:900px;
+  background:linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border-radius:18px;
+  padding:48px 32px;
+  text-align:center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  position:relative;
+  z-index:2;
+}
+
+.title{font-size:2.2rem;margin:0 0 8px;font-weight:700;letter-spacing:0.2px}
+.subtitle{font-size:1.2rem;margin:0 0 20px;color:#f3d1db;font-weight:500}
+
+.buttons{display:flex;gap:18px;justify-content:center;margin-top:8px;flex-wrap:wrap}
+.btn{
+  padding:14px 26px;border-radius:12px;border:none;font-weight:600;cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  transition:transform .14s ease, box-shadow .14s ease, opacity .14s;
+}
+.btn.small{padding:10px 18px;border-radius:10px}
+.btn:active{transform:translateY(2px)}
+.btn.ghost{background:#ffffffaa;color:var(--accent);backdrop-filter: blur(4px)}
+.btn.primary{background:linear-gradient(90deg,var(--accent),#ff7aa1);color:white}
+
+/* hint */
+.hint{margin-top:16px;color:#e9c8d6;font-size:.95rem}
+
+/* final screen */
+.final{
+  position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.7));
+  z-index:10;padding:28px;gap:14px;transform:scale(.98);opacity:0;pointer-events:none;transition:all .45s cubic-bezier(.2,.9,.2,1);
+}
+.final.show{opacity:1;transform:scale(1);pointer-events:auto}
+.final h1{font-size:2.6rem;margin:0}
+.final-text{font-size:1.05rem;color:#ffdbe6;text-align:center;max-width:620px}
+
+/* responsive */
+@media (max-width:520px){
+  .card{padding:28px}
+  .title{font-size:1.6rem}
+  .subtitle{font-size:1rem}
+}
+
+/* falling heart animation created by JS - but small css in case */
+.heart{
+  position:absolute;left:50%;width:26px;height:26px;background:var(--accent);transform:translateX(-50%) rotate(45deg);
+  border-radius:4px;box-shadow:0 6px 18px rgba(255,78,136,0.16);
+}
+.heart:before,.heart:after{
+  content:"";position:absolute;background:var(--accent);width:26px;height:26px;border-radius:50%;
+  top:-13px;left:0;
+}
+.heart:after{left:-13px;top:0;border-radius:50%}
