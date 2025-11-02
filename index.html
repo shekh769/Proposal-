@@ -1,48 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Will you be mine? 💖</title>
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposal 💌</title>
+  <style>
+    body {
+      background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+    h1 {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+    button {
+      background-color: white;
+      color: #ff5e78;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      margin: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #ff5e78;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-  <div class="scene">
-    <div class="lights"></div>
-    <div id="hearts"></div>
+  <h1>Fizao mein Mehka shaam ho tum 💖</h1>
+  <p>Pyaar mein jhalakta jaam ho tum<br>
+  Seene mein chhupaye phirte hain hum tumhari yaadein<br>
+  Isliye meri zindagi ka doosra naam ho tum 🥰</p>
 
-    <div class="card" id="card">
-      <h1 class="title">Seema, I love you ❤️</h1>
-      <p class="subtitle">Will you be mine?</p>
+  <h2>Will you be mine forever? 💍</h2>
 
-      <!-- 🩷 Added Shayari Section -->
-      <div class="shayari">
-        <p>Fizao mein Mehka sham ho tum,<br>
-        Pyaar mein Jhalakta Jaam ho tum,<br>
-        Seene mein Chhupaye phirte hain hum tumhari yaadein,<br>
-        Is liye meri Zindagi ka doosra naam ho tum 💖</p>
-      </div>
+  <button onclick="sendResponse('Yes')">Yes 💖</button>
+  <button onclick="sendResponse('No')">No 💔</button>
 
-      <div class="buttons">
-        <button id="yesBtn" class="btn primary">Yes 💕</button>
-        <button id="noBtn" class="btn ghost">No 😜</button>
-      </div>
-
-      <p class="hint">Tap Yes — I promise to make you smile everyday.</p>
-    </div>
-
-    <div class="final" id="final" aria-hidden="true">
-      <h1>Yay! 🥰</h1>
-      <p class="final-text">Seema said YES! 💖<br>You're my world — forever.</p>
-      <button id="restart" class="btn primary small">Restart</button>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+  <script>
+    function sendResponse(answer) {
+      fetch("https://script.google.com/macros/s/AKfycbzu4J_VNFZiJsQGK8NepEJI5UU6SPko6JRQ7f0Tz3x9cAGa5Pj2s8yBp6oWY-shRsRP/exec", {
+        method: "POST",
+        body: JSON.stringify({
+          name: "Your Crush Name 😘",
+          response: answer
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => alert("Response sent successfully: " + answer))
+      .catch(err => alert("Error sending response 😞"));
+    }
+  </script>
 </body>
 </html>
+
 
