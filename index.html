@@ -5,85 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proposal 💖</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
     body {
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top, #1a1a1a, #000);
+      background-color: #111;
       color: #fff;
       text-align: center;
       padding: 50px;
       overflow: hidden;
-      opacity: 0;
-      animation: fadeIn 1.5s ease-in forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
       color: #ff4d6d;
-      font-size: 2.5em;
-      text-shadow: 0 0 15px #ff4d6d;
-      animation: glow 2s infinite alternate;
-    }
-
-    @keyframes glow {
-      from { text-shadow: 0 0 5px #ff4d6d, 0 0 10px #ff4d6d; }
-      to { text-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff4d6d; }
+      font-size: 2em;
     }
 
     p {
       font-size: 1.1em;
       margin: 10px 0;
-      line-height: 1.6;
-      animation: fadeSlide 2s ease-out;
-    }
-
-    @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     .buttons {
-      margin-top: 30px;
-      animation: fadeIn 2s ease-in-out forwards;
-      animation-delay: 1s;
+      margin-top: 20px;
     }
 
     button {
       font-size: 1em;
-      padding: 12px 28px;
+      padding: 10px 25px;
       margin: 10px;
       border: none;
       border-radius: 25px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: 0.3s;
     }
 
     #yesBtn {
       background-color: #ff4d6d;
       color: white;
-      box-shadow: 0 0 15px #ff4d6d;
-    }
-
-    #yesBtn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 25px #ff4d6d, 0 0 50px #ff4d6d;
     }
 
     #noBtn {
-      background-color: #333;
+      background-color: #444;
       color: white;
       position: relative;
     }
-
-    #noBtn:hover {
-      background-color: #555;
-    }
-
   </style>
 </head>
 <body>
@@ -92,8 +56,8 @@
   <p>Will you be mine?</p>
 
   <p>
-    Fizao mein Mehka shaam ho tum,<br>
-    Pyaar mein Jhalakta jaam ho tum,<br>
+    Fizao mein Mehka sham ho tum,<br>
+    Pyaar mein Jhalakta Jaam ho tum,<br>
     Seene mein Chhupaye phirte hain hum tumhari yaadein,<br>
     Is liye meri Zindagi ka doosra naam ho tum 💖
   </p>
@@ -115,31 +79,16 @@
       noBtn.style.top = `${y}px`;
     }
 
+    // Move on hover
     noBtn.addEventListener("mouseover", moveNoButton);
+
+    // Move on click too 😁
     noBtn.addEventListener("click", moveNoButton);
 
+    // Yes button redirects
     yesBtn.addEventListener("click", () => {
-      yesBtn.innerText = "Yay! 💖";
-      yesBtn.style.backgroundColor = "#ff79a6";
-      setTimeout(() => window.location.href = "yes.html", 1000);
+      window.location.href = "yes.html";
     });
   </script>
 
 </body>
-</html>
-<body>
-  <div class="container">
-    <!-- Tumhara existing content -->
-    <h1>Seema, I love you ❤️</h1>
-    <p>Will you be mine?</p>
-    <!-- Aur tumhara existing paragraph, buttons waala part -->
-
-    <!-- Hearts for animation -->
-    <div class="heart">💖</div>
-    <div class="heart">💖</div>
-    <div class="heart">💖</div>
-    <div class="heart">💖</div>
-    <div class="heart">💖</div>
-  </div>
-</body>
-
