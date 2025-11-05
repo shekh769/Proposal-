@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Proposal 💖</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
@@ -10,35 +10,34 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top, #1a1a1a, #000);
       color: #fff;
+      background: radial-gradient(circle at top, #1a1a1a, #000);
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
       text-align: center;
+      animation: fadeInBody 1s ease-out forwards;
     }
 
-    .container {
-      position: relative;
-      width: 90%;
-      max-width: 700px;
-      z-index: 2;
-      animation: fadeIn 1.5s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+    @keyframes fadeInBody {
+      from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
     }
 
     h1 {
       color: #ff4d6d;
-      font-size: 2.5em;
-      text-shadow: 0 0 20px #ff4d6d;
+      font-size: 2.6rem;
+      margin-bottom: 8px;
+      text-shadow: 0 0 15px #ff4d6d;
       animation: glow 2s infinite alternate;
-      margin-bottom: 10px;
     }
 
     @keyframes glow {
@@ -48,58 +47,60 @@
 
     p {
       line-height: 1.6;
-      font-size: 1.1em;
+      font-size: 1.1rem;
       margin-bottom: 25px;
     }
 
-    .buttons {
-      position: relative;
-      display: flex;
+    .btn-row {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 20px;
+      gap: 18px;
+      position: relative;
+      margin-top: 20px;
     }
 
     button {
-      font-size: 1em;
+      font-size: 1rem;
       padding: 12px 28px;
       border: none;
       border-radius: 25px;
       cursor: pointer;
       transition: all 0.3s ease;
+      user-select: none;
     }
 
     #yesBtn {
       background-color: #ff4d6d;
-      color: white;
+      color: #fff;
       box-shadow: 0 0 15px #ff4d6d;
     }
 
     #yesBtn:hover {
-      transform: scale(1.1);
+      transform: scale(1.08);
       box-shadow: 0 0 25px #ff4d6d, 0 0 50px #ff4d6d;
     }
 
     #noBtn {
       background-color: #333;
-      color: white;
+      color: #fff;
       position: absolute;
-      right: 0;
+      right: -100px;
+      top: 0;
+      transition: all 0.25s ease;
     }
 
-    #noBtn:hover {
-      background-color: #555;
-    }
+    #noBtn:hover { background-color: #555; }
 
-    /* 💖 Floating hearts */
+    /* Floating hearts */
     .heart {
       position: absolute;
       bottom: -10vh;
       color: #ff4d6d;
-      font-size: 2rem;
+      font-size: 1.8rem;
       opacity: 0;
       animation: floatUp 6s linear infinite;
-      filter: drop-shadow(0 0 10px #ff4d6d);
+      filter: drop-shadow(0 0 6px rgba(255,77,109,.7));
       pointer-events: none;
     }
 
@@ -109,15 +110,14 @@
     }
 
     .heart:nth-child(1) { left: 10%; animation-delay: 0s; }
-    .heart:nth-child(2) { left: 30%; animation-delay: 1.5s; }
-    .heart:nth-child(3) { left: 50%; animation-delay: 3s; }
-    .heart:nth-child(4) { left: 70%; animation-delay: 4.5s; }
-    .heart:nth-child(5) { left: 85%; animation-delay: 6s; }
+    .heart:nth-child(2) { left: 30%; animation-delay: 1.2s; }
+    .heart:nth-child(3) { left: 50%; animation-delay: 2.4s; }
+    .heart:nth-child(4) { left: 70%; animation-delay: 3.6s; }
+    .heart:nth-child(5) { left: 85%; animation-delay: 4.8s; }
   </style>
 </head>
 <body>
-
-  <div class="container">
+  <div class="content">
     <h1>Seema, I love you ❤️</h1>
     <p>Will you be mine?</p>
     <p>
@@ -127,13 +127,13 @@
       Is liye meri Zindagi ka doosra naam ho tum 💖
     </p>
 
-    <div class="buttons">
+    <div class="btn-row" id="btnRow">
       <button id="yesBtn">Yes 💕</button>
       <button id="noBtn">No 😜</button>
     </div>
   </div>
 
-  <!-- 💖 Floating hearts -->
+  <!-- Floating hearts -->
   <div class="heart">💖</div>
   <div class="heart">💖</div>
   <div class="heart">💖</div>
@@ -141,11 +141,11 @@
   <div class="heart">💖</div>
 
   <script>
-    const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
 
-    // "No" button movement — screen ke andar hi
-    function moveNoButton() {
+    // Function: Move "No" safely within window
+    function moveNoSafely() {
       const maxX = window.innerWidth - noBtn.offsetWidth - 20;
       const maxY = window.innerHeight - noBtn.offsetHeight - 20;
       const x = Math.random() * maxX;
@@ -154,16 +154,23 @@
       noBtn.style.top = `${y}px`;
     }
 
-    noBtn.addEventListener("mouseenter", moveNoButton);
-    noBtn.addEventListener("click", moveNoButton);
-    noBtn.addEventListener("touchstart", moveNoButton);
+    // ❌ Only move on click (not hover)
+    noBtn.addEventListener("click", moveNoSafely);
 
+    // ✅ "Yes" click effect
     yesBtn.addEventListener("click", () => {
       yesBtn.innerText = "Yay! 💖";
       yesBtn.style.backgroundColor = "#ff79a6";
-      setTimeout(() => window.location.href = "yes.html", 1000);
+      setTimeout(() => window.location.href = "yes.html", 900);
+    });
+
+    // ✅ Keep both buttons side by side at start
+    window.addEventListener("load", () => {
+      const yesRect = yesBtn.getBoundingClientRect();
+      const parentRect = yesBtn.parentElement.getBoundingClientRect();
+      noBtn.style.left = (yesRect.right - parentRect.left + 20) + "px";
+      noBtn.style.top = (yesRect.top - parentRect.top) + "px";
     });
   </script>
-
 </body>
 </html>
