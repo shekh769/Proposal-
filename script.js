@@ -1,18 +1,30 @@
+// ✅ Button references
 const yesBtn = document.getElementById("yes");
 const noBtn = document.getElementById("no");
 
-// When user clicks "Yes"
+// ✅ "Yes" Button Action
 yesBtn.addEventListener("click", () => {
-  window.location.href = "success.html"; // open new page
+  yesBtn.innerText = "Yay! 💖";
+  yesBtn.style.backgroundColor = "#ff79a6";
+  setTimeout(() => {
+    window.location.href = "success.html"; // Redirect after 1s
+  }, 800);
 });
 
-// Move "No" button randomly when hovered or touched
+// ✅ Function to move "No" button randomly (safe range)
 function moveNo() {
-  const x = Math.random() * 300 - 150;
-  const y = Math.random() * 300 - 150;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+  const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+
+  noBtn.style.position = "absolute";
+  noBtn.style.left = `${x}px`;
+  noBtn.style.top = `${y}px`;
+  noBtn.style.transition = "all 0.2s ease";
 }
 
+// ✅ Move button on hover, click, or touch
 noBtn.addEventListener("mouseenter", moveNo);
 noBtn.addEventListener("click", moveNo);
 noBtn.addEventListener("touchstart", moveNo);
