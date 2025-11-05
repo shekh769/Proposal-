@@ -1,53 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Proposal 💖</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #111;
+      background: radial-gradient(circle at top, #1a1a1a, #000);
       color: #fff;
       text-align: center;
       padding: 50px;
       overflow: hidden;
+      opacity: 0;
+      animation: fadeIn 1.5s ease-in forwards;
+      height: 100vh;
+      position: relative;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
       color: #ff4d6d;
-      font-size: 2em;
+      font-size: 2.5em;
+      text-shadow: 0 0 15px #ff4d6d;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #ff4d6d, 0 0 10px #ff4d6d; }
+      to { text-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff4d6d; }
     }
 
     p {
       font-size: 1.1em;
       margin: 10px 0;
+      line-height: 1.6;
+      animation: fadeSlide 2s ease-out;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .buttons {
-      margin-top: 20px;
+      margin-top: 30px;
+      animation: fadeIn 2s ease-in-out forwards;
+      animation-delay: 1s;
     }
 
     button {
       font-size: 1em;
-      padding: 10px 25px;
+      padding: 12px 28px;
       margin: 10px;
       border: none;
       border-radius: 25px;
       cursor: pointer;
-      transition: 0.3s;
+      transition: all 0.3s ease;
     }
 
     #yesBtn {
       background-color: #ff4d6d;
       color: white;
+      box-shadow: 0 0 15px #ff4d6d;
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px #ff4d6d, 0 0 50px #ff4d6d;
     }
 
     #noBtn {
-      background-color: #444;
+      background-color: #333;
       color: white;
-      position: relative;
+      position: absolute;
+      transition: all 0.25s ease;
     }
+
+    #noBtn:hover {
+      background-color: #555;
+    }
+
+    /* Floating hearts animation */
+    .heart {
+      position: absolute;
+      bottom: -10vh;
+      color: #ff4d6d;
+      font-size: 2rem;
+      opacity: 0;
+      animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(100vh) scale(0.8); opacity: 0; }
+      to { transform: translateY(-10vh) scale(1.2); opacity: 1; }
+    }
+
+    .heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .heart:nth-child(2) { left: 25%; animation-delay: 1.5s; }
+    .heart:nth-child(3) { left: 50%; animation-delay: 3s; }
+    .heart:nth-child(4) { left: 70%; animation-delay: 4.5s; }
+    .heart:nth-child(5) { left: 85%; animation-delay: 6s; }
+
   </style>
 </head>
 <body>
@@ -56,8 +116,8 @@
   <p>Will you be mine?</p>
 
   <p>
-    Fizao mein Mehka sham ho tum,<br>
-    Pyaar mein Jhalakta Jaam ho tum,<br>
+    Fizao mein Mehka shaam ho tum,<br>
+    Pyaar mein Jhalakta jaam ho tum,<br>
     Seene mein Chhupaye phirte hain hum tumhari yaadein,<br>
     Is liye meri Zindagi ka doosra naam ho tum 💖
   </p>
@@ -67,28 +127,44 @@
     <button id="noBtn">No 😜</button>
   </div>
 
+  <!-- Floating hearts -->
+  <div class="heart">💖</div>
+  <div class="heart">💖</div>
+  <div class="heart">💖</div>
+  <div class="heart">💖</div>
+  <div class="heart">💖</div>
+
   <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
 
+    // Move No button safely within the screen
     function moveNoButton() {
-      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 50);
-      noBtn.style.position = "absolute";
+      const btnWidth = noBtn.offsetWidth;
+      const btnHeight = noBtn.offsetHeight;
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+
+      // safe area calculation (never goes out)
+      const maxX = screenWidth - btnWidth - 20;
+      const maxY = screenHeight - btnHeight - 20;
+      const x = Math.max(10, Math.random() * maxX);
+      const y = Math.max(10, Math.random() * maxY);
+
       noBtn.style.left = `${x}px`;
       noBtn.style.top = `${y}px`;
     }
 
-    // Move on hover
     noBtn.addEventListener("mouseover", moveNoButton);
-
-    // Move on click too 😁
     noBtn.addEventListener("click", moveNoButton);
+    noBtn.addEventListener("touchstart", moveNoButton);
 
-    // Yes button redirects
     yesBtn.addEventListener("click", () => {
-      window.location.href = "yes.html";
+      yesBtn.innerText = "Yay! 💖";
+      yesBtn.style.backgroundColor = "#ff79a6";
+      setTimeout(() => window.location.href = "yes.html", 1000);
     });
   </script>
 
 </body>
+</html>
