@@ -19,6 +19,7 @@ body {
 h1 {
   font-size: 2.5rem;
   margin-bottom: 10px;
+  text-shadow: 0 0 10px rgba(255, 78, 136, 0.8);
 }
 
 p {
@@ -32,12 +33,13 @@ button {
   border-radius: 10px;
   font-size: 18px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.2s ease-in-out;
 }
 
 #yes {
   background-color: #ff4e88;
   color: white;
+  box-shadow: 0 0 10px rgba(255, 78, 136, 0.7);
 }
 
 #no {
@@ -48,4 +50,5 @@ button {
 
 button:hover {
   transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
 }
