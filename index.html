@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proposal 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -11,31 +13,66 @@
       color: #fff;
       text-align: center;
       padding: 50px;
-      overflow: hidden;
+      height: 100vh; /* Use vh for full viewport height */
+      overflow: hidden; /* Hide scrollbars */
+      box-sizing: border-box; /* Include padding in height */
+      opacity: 0; /* Start faded out */
+      animation: fadeIn 1.5s ease-in-out forwards; /* Fade in animation */
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     h1 {
-      color: #ff4d6d;
+      color: #ff4d6d; /* Pink color */
       font-size: 2em;
+      margin-bottom: 10px;
     }
 
     p {
       font-size: 1.1em;
-      margin: 10px 0;
+      margin: 10px 0 30px 0;
+      color: #ccc;
     }
 
     .buttons {
       margin-top: 20px;
+      position: relative; /* Container for buttons */
+      height: 100px; /* Give space for buttons to move */
     }
 
     button {
-      font-size: 1em;
-      padding: 10px 25px;
-      margin: 10px;
+      font-family: 'Poppins', sans-serif;
       border: none;
-      border-radius: 25px;
+      border-radius: 30px;
+      padding: 15px 35px;
+      font-size: 18px;
+      font-weight: bold;
       cursor: pointer;
-      transition: 0.3s;
+      transition: transform 0.3s, background 0.3s, left 0.5s, top 0.5s;
+      margin: 10px;
+      position: relative; /* Default position */
+    }
+
+    #yesBtn {
+      background-color: #ff5f7e;
+      color: white;
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.1);
+      background-color: #ff748f;
+    }
+
+    #noBtn {
+      background-color: #2f2f2f;
+      color: white;
+    }
+
+    #noBtn:hover {
+      transform: scale(1.1);
     }
   </style>
 </head>
@@ -49,160 +86,59 @@
     Seene mein Chhupaye phirte hain hum tumhari yaadein,<br>
     Is liye meri Zindagi ka doosra naam ho tum 💖
   </p>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Proposal Page</title>
-<style>
-  body {
-    background-color: #0e0e0e;
-    color: white;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding-top: 100px;
-    opacity: 0;
-    animation: fadeIn 1.5s ease-in-out forwards;
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  h1 {
-    font-size: 2em;
-    margin-bottom: 10px;
-  }
-
-  p {
-    font-size: 1.1em;
-    margin-bottom: 30px;
-    color: #ccc;
-  }
-
-  button {
-    border: none;
-    border-radius: 30px;
-    padding: 15px 35px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.3s, background 0.3s;
-    position: absolute;
-  }
-
-  #yesBtn {
-    background-color: #ff5f7e;
-    color: white;
-    left: 50%;
-  }
-
-  #yesBtn:hover {
-    transform: scale(1.1);
-    background-color: #ff748f;
-  }
-
-  #noBtn {
-    background-color: #2f2f2f;
-    color: white;
-    right: 50%;
-  }
-
-  #noBtn:hover {
-    transform: scale(1.1);
-  }
-</style>
-</head>
-<body>
+  
+  <hr style="border-color: #333; margin: 30px 0;">
 
   <h1>Will You Be Mine?</h1>
   <p>This is a special proposal just for you!</p>
 
-  <button id="yesBtn" onclick="alert ('Yay! 💖  Ab lagta hai duaayein qubool ho gayi, jise chaaha tha dil se, wo ab meri ho gayi 💖!'
-)">Yes 💕</button>
-  <button id="noBtn" onclick="moveNo()">No 😜</button>
+  <div class="buttons">
+    <button id="yesBtn">Yes 💕</button>
+    <button id="noBtn">No 😜</button>
+  </div>
 
   <script>
-    const noBtn = document.getElementById('noBtn');
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
 
-    function moveNo() {
+    function moveNoButton() {
+      // Viewport dimensions
       const bodyWidth = window.innerWidth;
       const bodyHeight = window.innerHeight;
+      
+      // Button dimensions
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
 
-      const newX = Math.random() * (bodyWidth - btnWidth);
-      const newY = Math.random() * (bodyHeight - btnHeight);
+      // Random position
+      const x = Math.random() * (bodyWidth - btnWidth);
+      // -50 taki button poora neeche na chhip jaaye
+      const y = Math.random() * (bodyHeight - btnHeight - 50); 
 
-      noBtn.style.left = `${newX}px`;
-      noBtn.style.top = `${newY}px`;
+      // Position ko absolute banana zaroori hai
+      noBtn.style.position = "absolute"; 
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
     }
+
+    // Button ko hover par move karo
+    noBtn.addEventListener("mouseover", moveNoButton);
+
+    // Button ko click par bhi move karo
+    noBtn.addEventListener("click", moveNoButton);
+
+    // Yes button ka logic
+    yesBtn.addEventListener("click", () => {
+      // Body ko fade out karo
+      document.body.style.transition = "opacity 1s";
+      document.body.style.opacity = "0";
+      
+      // Animation finish hone ke baad naya page load karo
+      setTimeout(() => {
+        window.location.href = "yes.html";
+      }, 1000); // 1000ms = 1 second
+    });
   </script>
 
 </body>
 </html>
-<script>
-  const noBtn = document.getElementById("noBtn");
-  const yesBtn = document.getElementById("yesBtn");
-
-  function moveNoButton() {
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 50);
-    noBtn.style.position = "absolute";
-    noBtn.style.left = `${x}px`;
-    noBtn.style.top = `${y}px`;
-  }
-
-  // Move on hover
-  noBtn.addEventListener("mouseover", moveNoButton);
-
-  // Move on click too 😁
-  noBtn.addEventListener("click", moveNoButton);
-
-  // Yes button redirect with fade-out animation
-  yesBtn.addEventListener("click", () => {
-    document.body.style.transition = "opacity 1s";
-    document.body.style.opacity = "0";
-    setTimeout(() => {
-      window.location.href = "yes.html";
-    }, 1000);
-  });
-</script>
-
-<script>
-  const noBtn = document.getElementById("noBtn");
-  const yesBtn = document.getElementById("yesBtn");
-
-  function moveNoButton() {
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 50);
-    noBtn.style.position = "absolute";
-    noBtn.style.left = `${x}px`;
-    noBtn.style.top = `${y}px`;
-  }
-
-  // Move on hover
-  noBtn.addEventListener("mouseover", moveNoButton);
-
-  // Move on click too 😁
-  noBtn.addEventListener("click", moveNoButton);
-
-  // Yes button redirect with fade-out animation
-  yesBtn.addEventListener("click", () => {
-    document.body.style.transition = "opacity 1s";
-    document.body.style.opacity = "0";
-    setTimeout(() => {
-      window.location.href = "yes.html";
-    }, 1000);
-  });
-</script>
-
-
-
-
-
