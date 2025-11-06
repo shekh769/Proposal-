@@ -18,17 +18,17 @@
       background-color: #111;
       color: #fff;
       text-align: center;
-      padding: 20px; /* Mobile-friendly padding */
+      padding: 20px;
       min-height: 100vh;
-      display: flex; /* For centering content */
+      display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      overflow-x: hidden; /* Prevent horizontal scroll */
+      overflow: hidden; /* Prevent scrolls due to absolute position of hearts/no button */
       box-sizing: border-box;
       opacity: 0;
       animation: fadeIn 1.5s ease-in-out forwards;
-      position: relative; /* For particle-box positioning */
+      position: relative; 
     }
 
     @keyframes fadeIn {
@@ -38,7 +38,7 @@
 
     h1 {
       color: var(--pink-color);
-      font-size: 2.5em; /* Slightly bigger font */
+      font-size: 2.5em; 
       margin-bottom: 10px;
       /* Text Glow Effect */
       text-shadow: 0 0 10px var(--pink-color), 0 0 20px var(--pink-color);
@@ -50,34 +50,45 @@
     }
 
     p {
-      font-size: 1em; /* Adjusted for mobile */
+      font-size: 1em;
       margin: 10px auto 20px auto;
       color: #ccc;
-      max-width: 90%; /* For smaller screens */
+      max-width: 90%; 
     }
 
     .buttons {
       margin-top: 30px;
-      position: relative;
-      height: 120px; /* Adjusted height for moving button */
+      /* Crucial: Buttons container needs relative position to hold its space */
+      position: relative; 
+      height: 120px; 
       display: flex;
       justify-content: center;
       align-items: center;
       width: 100%;
+      /* Background for button area, helps contain the yes button */
+      z-index: 5; 
+    }
+    
+    /* Ensure the main content stays above the particle box */
+    h1, p, hr {
+        z-index: 10;
+        position: relative;
     }
 
     button {
       font-family: 'Poppins', sans-serif;
       border: none;
       border-radius: 30px;
-      padding: 12px 30px; /* Adjusted padding for mobile */
-      font-size: 16px; /* Adjusted font size for mobile */
+      padding: 12px 30px;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
+      /* Added transform transition for smooth movement */
       transition: transform 0.3s, background 0.3s, box-shadow 0.3s, left 0.5s, top 0.5s;
       margin: 10px;
-      position: relative;
-      z-index: 10; /* Buttons should be above hearts */
+      /* Position: absolute will be added by JS only when it moves */
+      position: relative; 
+      z-index: 10; 
     }
 
     /* Yes Button: Glow Effect */
@@ -96,10 +107,12 @@
     #noBtn {
       background-color: #2f2f2f;
       color: white;
+      /* Removed the initial opacity: 0 */
+      /* No special starting style needed, it uses the default button style */
     }
 
     #noBtn:hover {
-      transform: scale(1.1);
+      /* Removed transform: scale(1.1) to avoid flicker when moving */
       box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     }
 
@@ -117,8 +130,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      pointer-events: none; /* Allows clicks to pass through */
+      pointer-events: none; 
       overflow: hidden;
+      z-index: 1; /* Keep hearts below content/buttons */
     }
     
     /* Media Queries for Mobile Responsiveness */
@@ -142,7 +156,6 @@
       }
     }
     
-    /* Single Heart particle style */
     @keyframes rise {
       0% {
         transform: translateY(0) scale(1);
@@ -183,8 +196,11 @@
     const yesBtn = document.getElementById("yesBtn");
     const particleBox = document.getElementById("particleBox");
     
-    // Function to move the 'No' button
-    function moveNoButton() {
+    // Flag to track if the button has been moved yet
+    let isNoBtnMoved = false;
+
+    // Function to calculate a random position
+    function getRandomPosition() {
       // Use clientWidth/Height of the body for better accuracy
       const bodyWidth = document.body.clientWidth;
       const bodyHeight = document.body.clientHeight;
@@ -192,38 +208,52 @@
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
 
-      // Calculate new random position
-      // We subtract button size to keep the button fully visible
-      // We also add a small offset to keep it away from the extreme edges
+      // Ensure button is within the viewport boundaries (with a 20px margin)
       const x = Math.random() * (bodyWidth - btnWidth - 40) + 20;
       const y = Math.random() * (bodyHeight - btnHeight - 40) + 20;
 
-      noBtn.style.position = "absolute";
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
+      return { x, y };
+    }
+
+    // Function to apply the random position and switch to absolute
+    function moveNoButton() {
+        // If it's the first move, switch its position to absolute
+        if (!isNoBtnMoved) {
+            noBtn.style.position = "absolute";
+            // Get the current position relative to the viewport
+            const rect = noBtn.getBoundingClientRect();
+            
+            // Set top/left based on current viewport position before moving
+            noBtn.style.left = `${rect.left}px`;
+            noBtn.style.top = `${rect.top}px`;
+            
+            // Append it to the body so it can move anywhere on the screen
+            document.body.appendChild(noBtn);
+            isNoBtnMoved = true;
+        }
+
+        const { x, y } = getRandomPosition();
+        noBtn.style.left = `${x}px`;
+        noBtn.style.top = `${y}px`;
     }
     
-    // --- Heart Particle Effect Function ---
+    // --- Heart Particle Effect Function (unchanged) ---
     function createHeartParticle() {
         const heart = document.createElement('div');
-        heart.innerHTML = '❤️'; // Unicode heart symbol
+        heart.innerHTML = '❤️'; 
         heart.style.position = 'absolute';
-        heart.style.fontSize = `${Math.random() * 15 + 10}px`; // Random size between 10px and 25px
+        heart.style.fontSize = `${Math.random() * 15 + 10}px`; 
         
-        // Start position: Random position at the bottom of the body
         const startX = Math.random() * document.body.clientWidth;
-        const startY = document.body.clientHeight; // Start from the bottom
         
         heart.style.left = `${startX}px`;
-        heart.style.bottom = '0px'; // Using bottom for the rise animation
+        heart.style.bottom = '0px'; 
         
-        // Randomize animation duration and delay for a natural look
-        const duration = Math.random() * 5 + 3; // 3s to 8s
-        const delay = Math.random() * 2; // 0s to 2s delay
+        const duration = Math.random() * 5 + 3; 
+        const delay = Math.random() * 2; 
         
         heart.style.animation = `rise ${duration}s linear ${delay}s infinite`;
         
-        // Remove the heart after one cycle to prevent accumulation (optional, but good practice)
         setTimeout(() => {
             heart.remove();
         }, (duration + delay) * 1000); 
@@ -231,40 +261,25 @@
         particleBox.appendChild(heart);
     }
     
-    // Create particles at a continuous interval
-    let heartInterval = setInterval(createHeartParticle, 300); // Create a new heart every 300ms
+    let heartInterval = setInterval(createHeartParticle, 300); 
 
-    // Button event listeners
+    // **FIX APPLIED HERE:** // The moveNoButton logic is now only triggered by mouseover and click events.
+    
     noBtn.addEventListener("mouseover", moveNoButton);
     noBtn.addEventListener("click", (e) => {
-        e.stopPropagation(); // Prevents "Yes" logic from running if it somehow triggers
+        e.stopPropagation(); 
         moveNoButton();
     });
 
     yesBtn.addEventListener("click", () => {
-      // Stop the heart particle generation
       clearInterval(heartInterval);
       
-      // Body ko fade out karo
       document.body.style.transition = "opacity 1s";
       document.body.style.opacity = "0";
       
-      // Animation finish hone ke baad naya page load karo
       setTimeout(() => {
-        // Replace with your actual success page
         window.location.href = "yes.html"; 
       }, 1000); 
-    });
-    
-    // Initial call to ensure no button is inside .buttons container on load
-    window.addEventListener('load', () => {
-        // Move the button to a random position on the screen
-        const initialX = window.innerWidth / 2 + 50; // Initial side offset
-        const initialY = document.querySelector('.buttons').offsetTop + document.querySelector('.buttons').offsetHeight / 2;
-        
-        noBtn.style.position = "absolute";
-        noBtn.style.left = `${initialX}px`;
-        noBtn.style.top = `${initialY - noBtn.offsetHeight / 2}px`;
     });
   </script>
 
