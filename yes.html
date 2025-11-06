@@ -4,27 +4,147 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>She said Yes 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  
   <style>
+    :root {
+      --celebration-color: #ff4d6d;
+      --glow-color: #ffb3c1;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
       background-color: #000;
       color: #fff;
       text-align: center;
-      padding: 50px;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* Hide particles overflow */
+      box-sizing: border-box;
+      opacity: 0;
+      animation: fadeIn 3s ease-in-out forwards; /* Slow, dramatic fade in */
+      position: relative; 
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
     h1 {
-      color: #ff4d6d;
-      font-size: 2em;
+      /* Heading Glow and Animation */
+      font-family: 'Dancing Script', cursive;
+      color: var(--celebration-color);
+      font-size: 4em; /* Bigger font size */
+      margin-bottom: 15px;
+      text-shadow: 0 0 15px var(--glow-color), 0 0 30px var(--celebration-color);
+      animation: pulse 2s infinite alternate; /* Pulsing effect for excitement */
     }
+
+    @keyframes pulse {
+        from { transform: scale(1); }
+        to { transform: scale(1.05); }
+    }
+
     p {
       font-size: 1.2em;
       margin-top: 20px;
+      color: #ccc;
+      /* Subtle text glow */
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+      z-index: 10;
+      position: relative;
+    }
+
+    /* --- Confetti/Heart Particle Container --- */
+    .confetti-box {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1; /* Below the text */
+    }
+    
+    /* Heart drop/fall animation */
+    @keyframes drop {
+      0% {
+        transform: translateY(-10vh) rotate(0deg) scale(0.5);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg) scale(0.1);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Yay! 🥰</h1>
-  <p>Ab lagta hai duaayein qubool ho gayi,<br>
-  jise chaaha tha dil se, wo ab meri ho gayi 💖</p>
+    
+  <div class="confetti-box" id="confettiBox"></div>
+
+  <h1>She Said YES! 🎉</h1>
+  <p>
+    Ab lagta hai duaayein qubool ho gayi,<br>
+    jise chaaha tha dil se, wo ab meri ho gayi 💖
+  </p>
+
+  <script>
+    const confettiBox = document.getElementById("confettiBox");
+    
+    // Function to create a heart/confetti particle
+    function createConfetti() {
+        const confetti = document.createElement('div');
+        confetti.innerHTML = '✨'; // Star or Heart
+        
+        // Randomly choose between heart, star, or diamond
+        const symbols = ['💖', '❤️', '✨', '💎']; 
+        confetti.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+        
+        confetti.style.position = 'absolute';
+        confetti.style.fontSize = `${Math.random() * 20 + 15}px`; // Larger confetti
+        confetti.style.color = Math.random() < 0.5 ? 'var(--celebration-color)' : 'white';
+        
+        // Start position: Random position from the top
+        const startX = Math.random() * document.body.clientWidth;
+        
+        confetti.style.left = `${startX}px`;
+        confetti.style.top = '-10vh'; // Start above the screen
+        
+        // Randomize animation duration, delay, and rotation
+        const duration = Math.random() * 8 + 4; // 4s to 12s
+        const delay = Math.random() * 2; // 0s to 2s delay
+        
+        confetti.style.animation = `drop ${duration}s linear ${delay}s forwards`;
+        
+        // Remove the confetti after animation ends
+        setTimeout(() => {
+            confetti.remove();
+        }, (duration + delay) * 1000); 
+
+        confettiBox.appendChild(confetti);
+    }
+    
+    // Start generating confetti rapidly for the first few seconds
+    let confettiBurst = 0;
+    const burstInterval = setInterval(() => {
+        for (let i = 0; i < 5; i++) {
+            createConfetti();
+        }
+        confettiBurst++;
+        if (confettiBurst > 20) { // Stop the initial burst after 20 cycles (100 particles)
+            clearInterval(burstInterval);
+            // After the burst, keep a slower, continuous stream
+            setInterval(createConfetti, 500); 
+        }
+    }, 100); 
+
+  </script>
 </body>
 </html>
