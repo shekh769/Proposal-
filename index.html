@@ -146,4 +146,31 @@
 
 </body>
 </html>
+<script>
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+
+  function moveNoButton() {
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 50);
+    noBtn.style.position = "absolute";
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+  }
+
+  // Move on hover
+  noBtn.addEventListener("mouseover", moveNoButton);
+
+  // Move on click too 😁
+  noBtn.addEventListener("click", moveNoButton);
+
+  // Yes button redirect with fade-out animation
+  yesBtn.addEventListener("click", () => {
+    document.body.style.transition = "opacity 1s";
+    document.body.style.opacity = "0";
+    setTimeout(() => {
+      window.location.href = "yes.html";
+    }, 1000);
+  });
+</script>
 
