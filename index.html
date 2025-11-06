@@ -25,15 +25,13 @@
       align-items: center;
       overflow: hidden;
       box-sizing: border-box;
+      /* Animation now starts after the 'start' button click for a better user experience */
       opacity: 0;
-      animation: fadeIn 1.5s ease-in-out forwards;
+      transition: opacity 1.5s ease-in-out;
       position: relative; 
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+    
+    /* Animation removed from body, now handled by JS for perfect sync */
 
     /* --- Heading and Typing Effect CSS --- */
     .typing-container {
@@ -54,14 +52,19 @@
       border-right: .15em solid var(--pink-color); 
       letter-spacing: .10em; 
       width: 0;
-      animation: 
-        typing 3.5s steps(30, end) forwards,
-        blink-caret .75s step-end infinite;
+      /* Typing animation will be added by JS after the start click */
       
       text-shadow: 0 0 10px var(--pink-color), 0 0 20px var(--pink-color);
       transition: text-shadow 0.5s ease;
     }
     
+    /* Apply typing animation only when 'playing' class is active */
+    .playing #mainHeading {
+        animation: 
+            typing 3.5s steps(30, end) forwards,
+            blink-caret .75s step-end infinite;
+    }
+
     @keyframes typing {
       from { width: 0 }
       to { width: 100% }
@@ -179,42 +182,46 @@
 </head>
 <body>
 
-  <audio id="SpotiDown.App%20-%20Tum%20Hi%20Ho%20-%20Mithoon.mp3" loop>
+  <audio id="proposalAudio" loop>
     <source src="SpotiDown.App%20-%20Tum%20Hi%20Ho%20-%20Mithoon.mp3" type="audio/mp3">
     Your browser does not support the audio element.
   </audio>
   
-  <div id="playOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #111; z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: opacity 0.5s;">
+  <div id="playOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #111; z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: opacity 0.5s; opacity: 1;">
     <button id="startButton" style="padding: 15px 30px; font-size: 18px; background: var(--pink-color); color: white; border: none; border-radius: 30px; font-weight: bold; box-shadow: 0 0 20px var(--pink-color);">
         Tap to Start the Magic ✨
     </button>
     <p style="margin-top: 15px; font-size: 0.9em; color: #ccc;">(Music will start playing)</p>
   </div>
-  <div class="particle-box" id="particleBox"></div>
+  <div id="mainContent" style="width: 100%; text-align: center; opacity: 0; transition: opacity 1.5s;">
 
-  <div class="typing-container">
-    <h1 id="mainHeading">Seema, I love you ❤️</h1>
+      <div class="particle-box" id="particleBox"></div>
+
+      <div class="typing-container">
+        <h1 id="mainHeading">Seema, I love you ❤️</h1>
+      </div>
+
+      <p>
+        Fizao mein Mehka sham ho tum,<br>
+        Pyaar mein Jhalakta Jaam ho tum,<br>
+        Seene mein Chhupaye phirte hain hum tumhari yaadein,<br>
+        Is liye meri Zindagi ka doosra naam ho tum 💖
+      </p>
+      
+      <hr>
+
+      <h1 id="proposalHeading">Will You Be Mine?</h1>
+      
+      <div class="timer" id="countdownTimer">You have ∞ seconds to say Yes! 😉</div>
+      
+      <div class="buttons">
+        <button id="yesBtn">Yes 💕</button>
+        <button id="noBtn">No 😜</button>
+      </div>
   </div>
-
-  <p>
-    Fizao mein Mehka sham ho tum,<br>
-    Pyaar mein Jhalakta Jaam ho tum,<br>
-    Seene mein Chhupaye phirte hain hum tumhari yaadein,<br>
-    Is liye meri Zindagi ka doosra naam ho tum 💖
-  </p>
-  
-  <hr>
-
-  <h1 id="proposalHeading">Will You Be Mine?</h1>
-  
-  <div class="timer" id="countdownTimer">You have ∞ seconds to say Yes! 😉</div>
-  
-  <div class="buttons">
-    <button id="yesBtn">Yes 💕</button>
-    <button id="noBtn">No 😜</button>
-  </div>
-
   <script>
+    const body = document.body;
+    const mainContent = document.getElementById('mainContent');
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const particleBox = document.getElementById("particleBox");
@@ -235,24 +242,43 @@
     ];
 
     let isNoBtnMoved = false;
+    let heartInterval;
+    
+    // --- Initial setup: Make main content ready to fade in ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // Hide main content until start button is clicked
+        mainContent.style.opacity = 0;
+        mainContent.style.visibility = 'hidden';
+        
+        // Ensure body starts faded in (only the overlay is visible)
+        body.style.opacity = 1;
+    });
 
-    // --- AUTOPLAY FIX START ---
+    // --- AUTOPLAY FIX AND START LOGIC ---
     startButton.addEventListener('click', () => {
         // 1. Attempt to play audio
         audio.play().then(() => {
-            // 2. Success: Fade out and hide the overlay
-            playOverlay.style.opacity = '0';
-            setTimeout(() => {
-                playOverlay.style.display = 'none';
-            }, 500);
+            console.log("Audio started successfully.");
         }).catch(error => {
-            // 3. If blocked (rare after user click): Just hide the overlay
-            console.log("Audio play failed, proceeding without music.", error);
-            playOverlay.style.opacity = '0';
-            setTimeout(() => {
-                playOverlay.style.display = 'none';
-            }, 500);
+            console.log("Audio play failed, continuing without music.", error);
         });
+
+        // 2. Hide the overlay smoothly
+        playOverlay.style.opacity = '0';
+        
+        setTimeout(() => {
+            playOverlay.style.display = 'none';
+            playOverlay.remove(); // Remove overlay completely to ensure no blocking
+
+            // 3. Show main content and start animations/effects
+            mainContent.style.visibility = 'visible';
+            mainContent.style.opacity = '1';
+            body.classList.add('playing'); // Add class to trigger typing animation
+            
+            // 4. Start heart particles
+            heartInterval = setInterval(createHeartParticle, 300); 
+
+        }, 500); // 500ms delay for the fade-out transition
     });
     // --- AUTOPLAY FIX END ---
 
@@ -315,8 +341,6 @@
         particleBox.appendChild(heart);
     }
     
-    let heartInterval = setInterval(createHeartParticle, 300); 
-
     // Event listeners
     noBtn.addEventListener("mouseover", moveNoButton);
     noBtn.addEventListener("click", (e) => {
@@ -326,11 +350,12 @@
 
     yesBtn.addEventListener("click", () => {
       // Stop everything
-      clearInterval(heartInterval);
+      if (heartInterval) clearInterval(heartInterval);
       audio.pause();
       
-      document.body.style.transition = "opacity 1s";
-      document.body.style.opacity = "0";
+      // Fade out the main content
+      mainContent.style.transition = "opacity 1s";
+      mainContent.style.opacity = "0";
       
       setTimeout(() => {
         window.location.href = "yes.html"; 
@@ -340,4 +365,3 @@
 
 </body>
 </html>
-
