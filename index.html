@@ -41,24 +41,23 @@
         justify-content: center;
         width: 100%;
         margin-bottom: 20px;
-        min-height: 40px; /* To prevent layout shift */
+        min-height: 40px; 
     }
 
     #mainHeading {
       color: var(--pink-color);
-      font-family: 'Dancing Script', cursive; /* A more romantic font for the name */
+      font-family: 'Dancing Script', cursive; 
       font-size: 2.5em; 
       margin: 0;
       overflow: hidden; 
       white-space: nowrap; 
-      border-right: .15em solid var(--pink-color); /* The blinking cursor */
+      border-right: .15em solid var(--pink-color); 
       letter-spacing: .10em; 
       width: 0;
       animation: 
         typing 3.5s steps(30, end) forwards,
         blink-caret .75s step-end infinite;
       
-      /* Text Glow Effect */
       text-shadow: 0 0 10px var(--pink-color), 0 0 20px var(--pink-color);
       transition: text-shadow 0.5s ease;
     }
@@ -180,11 +179,17 @@
 </head>
 <body>
 
-  <audio autoplay loop>
+  <audio id="proposalAudio" loop>
     <source src="SpotiDown.App%20-%20Tum%20Hi%20Ho%20-%20Mithoon.mp3" type="audio/mp3">
-    Your browser does not support the audio element. (Please add the song to the folder)
+    Your browser does not support the audio element.
   </audio>
-
+  
+  <div id="playOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #111; z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: opacity 0.5s;">
+    <button id="startButton" style="padding: 15px 30px; font-size: 18px; background: var(--pink-color); color: white; border: none; border-radius: 30px; font-weight: bold; box-shadow: 0 0 20px var(--pink-color);">
+        Tap to Start the Magic ✨
+    </button>
+    <p style="margin-top: 15px; font-size: 0.9em; color: #ccc;">(Music will start playing)</p>
+  </div>
   <div class="particle-box" id="particleBox"></div>
 
   <div class="typing-container">
@@ -213,7 +218,9 @@
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const particleBox = document.getElementById("particleBox");
-    const countdownTimer = document.getElementById("countdownTimer");
+    const audio = document.getElementById('proposalAudio'); 
+    const playOverlay = document.getElementById('playOverlay');
+    const startButton = document.getElementById('startButton');
     
     // 4. Funny Text Array for 'No' Button
     const funnyTexts = [
@@ -228,6 +235,26 @@
     ];
 
     let isNoBtnMoved = false;
+
+    // --- AUTOPLAY FIX START ---
+    startButton.addEventListener('click', () => {
+        // 1. Attempt to play audio
+        audio.play().then(() => {
+            // 2. Success: Fade out and hide the overlay
+            playOverlay.style.opacity = '0';
+            setTimeout(() => {
+                playOverlay.style.display = 'none';
+            }, 500);
+        }).catch(error => {
+            // 3. If blocked (rare after user click): Just hide the overlay
+            console.log("Audio play failed, proceeding without music.", error);
+            playOverlay.style.opacity = '0';
+            setTimeout(() => {
+                playOverlay.style.display = 'none';
+            }, 500);
+        });
+    });
+    // --- AUTOPLAY FIX END ---
 
     // Function to calculate a random position
     function getRandomPosition() {
@@ -245,11 +272,9 @@
 
     // Function to apply the random position and change text
     function moveNoButton() {
-        // Change text to a funny one
         const randomIndex = Math.floor(Math.random() * funnyTexts.length);
         noBtn.textContent = funnyTexts[randomIndex];
         
-        // Button movement logic
         if (!isNoBtnMoved) {
             noBtn.style.position = "absolute";
             const rect = noBtn.getBoundingClientRect();
@@ -257,7 +282,6 @@
             noBtn.style.left = `${rect.left}px`;
             noBtn.style.top = `${rect.top}px`;
             
-            // Move to body (Important for free movement)
             document.body.appendChild(noBtn);
             isNoBtnMoved = true;
         }
@@ -301,14 +325,14 @@
     });
 
     yesBtn.addEventListener("click", () => {
-      // Stop hearts and timer
+      // Stop everything
       clearInterval(heartInterval);
+      audio.pause();
       
       document.body.style.transition = "opacity 1s";
       document.body.style.opacity = "0";
       
       setTimeout(() => {
-        // Redirect to success page
         window.location.href = "yes.html"; 
       }, 1000); 
     });
@@ -316,4 +340,3 @@
 
 </body>
 </html>
-
