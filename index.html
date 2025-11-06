@@ -7,17 +7,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   
   <style>
+    :root {
+      /* Define pink color variables */
+      --pink-color: #ff4d6d;
+      --glow-color: #ffb3c1;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
       background-color: #111;
       color: #fff;
       text-align: center;
-      padding: 50px;
-      height: 100vh; /* Use vh for full viewport height */
-      overflow: hidden; /* Hide scrollbars */
-      box-sizing: border-box; /* Include padding in height */
-      opacity: 0; /* Start faded out */
-      animation: fadeIn 1.5s ease-in-out forwards; /* Fade in animation */
+      padding: 20px; /* Mobile-friendly padding */
+      min-height: 100vh;
+      display: flex; /* For centering content */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden; /* Prevent horizontal scroll */
+      box-sizing: border-box;
+      opacity: 0;
+      animation: fadeIn 1.5s ease-in-out forwards;
+      position: relative; /* For particle-box positioning */
     }
 
     @keyframes fadeIn {
@@ -26,44 +37,60 @@
     }
 
     h1 {
-      color: #ff4d6d; /* Pink color */
-      font-size: 2em;
+      color: var(--pink-color);
+      font-size: 2.5em; /* Slightly bigger font */
       margin-bottom: 10px;
+      /* Text Glow Effect */
+      text-shadow: 0 0 10px var(--pink-color), 0 0 20px var(--pink-color);
+      transition: text-shadow 0.5s ease;
+    }
+    
+    h1:hover {
+        text-shadow: 0 0 20px var(--glow-color), 0 0 40px var(--pink-color);
     }
 
     p {
-      font-size: 1.1em;
-      margin: 10px 0 30px 0;
+      font-size: 1em; /* Adjusted for mobile */
+      margin: 10px auto 20px auto;
       color: #ccc;
+      max-width: 90%; /* For smaller screens */
     }
 
     .buttons {
-      margin-top: 20px;
-      position: relative; /* Container for buttons */
-      height: 100px; /* Give space for buttons to move */
+      margin-top: 30px;
+      position: relative;
+      height: 120px; /* Adjusted height for moving button */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
     }
 
     button {
       font-family: 'Poppins', sans-serif;
       border: none;
       border-radius: 30px;
-      padding: 15px 35px;
-      font-size: 18px;
+      padding: 12px 30px; /* Adjusted padding for mobile */
+      font-size: 16px; /* Adjusted font size for mobile */
       font-weight: bold;
       cursor: pointer;
-      transition: transform 0.3s, background 0.3s, left 0.5s, top 0.5s;
+      transition: transform 0.3s, background 0.3s, box-shadow 0.3s, left 0.5s, top 0.5s;
       margin: 10px;
-      position: relative; /* Default position */
+      position: relative;
+      z-index: 10; /* Buttons should be above hearts */
     }
 
+    /* Yes Button: Glow Effect */
     #yesBtn {
-      background-color: #ff5f7e;
+      background-color: var(--pink-color);
       color: white;
+      box-shadow: 0 0 5px var(--pink-color), 0 0 15px rgba(255, 77, 109, 0.4);
     }
 
     #yesBtn:hover {
       transform: scale(1.1);
       background-color: #ff748f;
+      box-shadow: 0 0 10px var(--glow-color), 0 0 30px var(--pink-color), 0 0 60px rgba(255, 77, 109, 0.6);
     }
 
     #noBtn {
@@ -73,10 +100,64 @@
 
     #noBtn:hover {
       transform: scale(1.1);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    hr {
+      border-color: #333; 
+      margin: 20px 0;
+      width: 80%;
+      max-width: 400px;
+    }
+
+    /* --- Heart Particle Animation CSS --- */
+    .particle-box {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none; /* Allows clicks to pass through */
+      overflow: hidden;
+    }
+    
+    /* Media Queries for Mobile Responsiveness */
+    @media (min-width: 600px) {
+      body {
+        padding: 50px;
+      }
+      h1 {
+        font-size: 3em;
+      }
+      p {
+        font-size: 1.1em;
+        max-width: 600px;
+      }
+      button {
+        padding: 15px 35px;
+        font-size: 18px;
+      }
+      .buttons {
+        height: 100px;
+      }
+    }
+    
+    /* Single Heart particle style */
+    @keyframes rise {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-100vh) scale(0);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
+
+  <div class="particle-box" id="particleBox"></div>
 
   <h1>Seema, I love you ❤️</h1>
 
@@ -87,7 +168,7 @@
     Is liye meri Zindagi ka doosra naam ho tum 💖
   </p>
   
-  <hr style="border-color: #333; margin: 30px 0;">
+  <hr>
 
   <h1>Will You Be Mine?</h1>
   <p>This is a special proposal just for you!</p>
@@ -100,43 +181,90 @@
   <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
-
+    const particleBox = document.getElementById("particleBox");
+    
+    // Function to move the 'No' button
     function moveNoButton() {
-      // Viewport dimensions
-      const bodyWidth = window.innerWidth;
-      const bodyHeight = window.innerHeight;
+      // Use clientWidth/Height of the body for better accuracy
+      const bodyWidth = document.body.clientWidth;
+      const bodyHeight = document.body.clientHeight;
       
-      // Button dimensions
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
 
-      // Random position
-      const x = Math.random() * (bodyWidth - btnWidth);
-      // -50 taki button poora neeche na chhip jaaye
-      const y = Math.random() * (bodyHeight - btnHeight - 50); 
+      // Calculate new random position
+      // We subtract button size to keep the button fully visible
+      // We also add a small offset to keep it away from the extreme edges
+      const x = Math.random() * (bodyWidth - btnWidth - 40) + 20;
+      const y = Math.random() * (bodyHeight - btnHeight - 40) + 20;
 
-      // Position ko absolute banana zaroori hai
-      noBtn.style.position = "absolute"; 
+      noBtn.style.position = "absolute";
       noBtn.style.left = `${x}px`;
       noBtn.style.top = `${y}px`;
     }
+    
+    // --- Heart Particle Effect Function ---
+    function createHeartParticle() {
+        const heart = document.createElement('div');
+        heart.innerHTML = '❤️'; // Unicode heart symbol
+        heart.style.position = 'absolute';
+        heart.style.fontSize = `${Math.random() * 15 + 10}px`; // Random size between 10px and 25px
+        
+        // Start position: Random position at the bottom of the body
+        const startX = Math.random() * document.body.clientWidth;
+        const startY = document.body.clientHeight; // Start from the bottom
+        
+        heart.style.left = `${startX}px`;
+        heart.style.bottom = '0px'; // Using bottom for the rise animation
+        
+        // Randomize animation duration and delay for a natural look
+        const duration = Math.random() * 5 + 3; // 3s to 8s
+        const delay = Math.random() * 2; // 0s to 2s delay
+        
+        heart.style.animation = `rise ${duration}s linear ${delay}s infinite`;
+        
+        // Remove the heart after one cycle to prevent accumulation (optional, but good practice)
+        setTimeout(() => {
+            heart.remove();
+        }, (duration + delay) * 1000); 
 
-    // Button ko hover par move karo
+        particleBox.appendChild(heart);
+    }
+    
+    // Create particles at a continuous interval
+    let heartInterval = setInterval(createHeartParticle, 300); // Create a new heart every 300ms
+
+    // Button event listeners
     noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // Prevents "Yes" logic from running if it somehow triggers
+        moveNoButton();
+    });
 
-    // Button ko click par bhi move karo
-    noBtn.addEventListener("click", moveNoButton);
-
-    // Yes button ka logic
     yesBtn.addEventListener("click", () => {
+      // Stop the heart particle generation
+      clearInterval(heartInterval);
+      
       // Body ko fade out karo
       document.body.style.transition = "opacity 1s";
       document.body.style.opacity = "0";
       
       // Animation finish hone ke baad naya page load karo
       setTimeout(() => {
-        window.location.href = "yes.html";
-      }, 1000); // 1000ms = 1 second
+        // Replace with your actual success page
+        window.location.href = "yes.html"; 
+      }, 1000); 
+    });
+    
+    // Initial call to ensure no button is inside .buttons container on load
+    window.addEventListener('load', () => {
+        // Move the button to a random position on the screen
+        const initialX = window.innerWidth / 2 + 50; // Initial side offset
+        const initialY = document.querySelector('.buttons').offsetTop + document.querySelector('.buttons').offsetHeight / 2;
+        
+        noBtn.style.position = "absolute";
+        noBtn.style.left = `${initialX}px`;
+        noBtn.style.top = `${initialY - noBtn.offsetHeight / 2}px`;
     });
   </script>
 
