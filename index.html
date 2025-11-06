@@ -4,11 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proposal 💖</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      /* Define pink color variables */
       --pink-color: #ff4d6d;
       --glow-color: #ffb3c1;
     }
@@ -24,7 +23,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      overflow: hidden; /* Prevent scrolls due to absolute position of hearts/no button */
+      overflow: hidden;
       box-sizing: border-box;
       opacity: 0;
       animation: fadeIn 1.5s ease-in-out forwards;
@@ -36,17 +35,50 @@
       to { opacity: 1; }
     }
 
-    h1 {
+    /* --- Heading and Typing Effect CSS --- */
+    .typing-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 20px;
+        min-height: 40px; /* To prevent layout shift */
+    }
+
+    #mainHeading {
       color: var(--pink-color);
+      font-family: 'Dancing Script', cursive; /* A more romantic font for the name */
       font-size: 2.5em; 
-      margin-bottom: 10px;
+      margin: 0;
+      overflow: hidden; 
+      white-space: nowrap; 
+      border-right: .15em solid var(--pink-color); /* The blinking cursor */
+      letter-spacing: .10em; 
+      width: 0;
+      animation: 
+        typing 3.5s steps(30, end) forwards,
+        blink-caret .75s step-end infinite;
+      
       /* Text Glow Effect */
       text-shadow: 0 0 10px var(--pink-color), 0 0 20px var(--pink-color);
       transition: text-shadow 0.5s ease;
     }
     
-    h1:hover {
-        text-shadow: 0 0 20px var(--glow-color), 0 0 40px var(--pink-color);
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: var(--pink-color); }
+    }
+    /* ------------------------------------ */
+
+    #proposalHeading {
+        color: var(--pink-color);
+        font-size: 2em;
+        margin: 20px 0 10px 0;
+        text-shadow: 0 0 10px var(--pink-color), 0 0 20px var(--pink-color);
     }
 
     p {
@@ -56,25 +88,25 @@
       max-width: 90%; 
     }
 
+    .timer {
+        color: #ffc300;
+        font-weight: bold;
+        margin-bottom: 15px;
+        font-size: 1.2em;
+        text-shadow: 0 0 5px rgba(255, 195, 0, 0.5);
+    }
+
     .buttons {
       margin-top: 30px;
-      /* Crucial: Buttons container needs relative position to hold its space */
       position: relative; 
       height: 120px; 
       display: flex;
       justify-content: center;
       align-items: center;
       width: 100%;
-      /* Background for button area, helps contain the yes button */
       z-index: 5; 
     }
     
-    /* Ensure the main content stays above the particle box */
-    h1, p, hr {
-        z-index: 10;
-        position: relative;
-    }
-
     button {
       font-family: 'Poppins', sans-serif;
       border: none;
@@ -83,10 +115,8 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      /* Added transform transition for smooth movement */
       transition: transform 0.3s, background 0.3s, box-shadow 0.3s, left 0.5s, top 0.5s;
       margin: 10px;
-      /* Position: absolute will be added by JS only when it moves */
       position: relative; 
       z-index: 10; 
     }
@@ -107,12 +137,9 @@
     #noBtn {
       background-color: #2f2f2f;
       color: white;
-      /* Removed the initial opacity: 0 */
-      /* No special starting style needed, it uses the default button style */
     }
 
     #noBtn:hover {
-      /* Removed transform: scale(1.1) to avoid flicker when moving */
       box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     }
 
@@ -121,6 +148,8 @@
       margin: 20px 0;
       width: 80%;
       max-width: 400px;
+      z-index: 10;
+      position: relative;
     }
 
     /* --- Heart Particle Animation CSS --- */
@@ -132,47 +161,35 @@
       height: 100%;
       pointer-events: none; 
       overflow: hidden;
-      z-index: 1; /* Keep hearts below content/buttons */
+      z-index: 1; 
     }
     
-    /* Media Queries for Mobile Responsiveness */
     @media (min-width: 600px) {
-      body {
-        padding: 50px;
-      }
-      h1 {
-        font-size: 3em;
-      }
-      p {
-        font-size: 1.1em;
-        max-width: 600px;
-      }
-      button {
-        padding: 15px 35px;
-        font-size: 18px;
-      }
-      .buttons {
-        height: 100px;
-      }
+      body { padding: 50px; }
+      #mainHeading { font-size: 3em; }
+      p { font-size: 1.1em; max-width: 600px; }
+      button { padding: 15px 35px; font-size: 18px; }
+      .buttons { height: 100px; }
     }
     
     @keyframes rise {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateY(-100vh) scale(0);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) scale(1); opacity: 0.8; }
+      100% { transform: translateY(-100vh) scale(0); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
+  <audio autoplay loop>
+    <source src="tum_hi_ho_instrumental.mp3" type="audio/mp3">
+    Your browser does not support the audio element. (Please add the song to the folder)
+  </audio>
+
   <div class="particle-box" id="particleBox"></div>
 
-  <h1>Seema, I love you ❤️</h1>
+  <div class="typing-container">
+    <h1 id="mainHeading">Seema, I love you ❤️</h1>
+  </div>
 
   <p>
     Fizao mein Mehka sham ho tum,<br>
@@ -183,9 +200,10 @@
   
   <hr>
 
-  <h1>Will You Be Mine?</h1>
-  <p>This is a special proposal just for you!</p>
-
+  <h1 id="proposalHeading">Will You Be Mine?</h1>
+  
+  <div class="timer" id="countdownTimer">You have ∞ seconds to say Yes! 😉</div>
+  
   <div class="buttons">
     <button id="yesBtn">Yes 💕</button>
     <button id="noBtn">No 😜</button>
@@ -195,39 +213,51 @@
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const particleBox = document.getElementById("particleBox");
+    const countdownTimer = document.getElementById("countdownTimer");
     
-    // Flag to track if the button has been moved yet
+    // 4. Funny Text Array for 'No' Button
+    const funnyTexts = [
+        "Are you sure? 🤔",
+        "Pagal ho kya? 🥺",
+        "It's a trap! 😈",
+        "Try Again! 😝",
+        "No exit! 🙅‍♀️",
+        "Dil todoge kya? 💔",
+        "Please don't. 🙏",
+        "Click Yes! 🥰"
+    ];
+
     let isNoBtnMoved = false;
 
     // Function to calculate a random position
     function getRandomPosition() {
-      // Use clientWidth/Height of the body for better accuracy
       const bodyWidth = document.body.clientWidth;
       const bodyHeight = document.body.clientHeight;
       
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
 
-      // Ensure button is within the viewport boundaries (with a 20px margin)
       const x = Math.random() * (bodyWidth - btnWidth - 40) + 20;
       const y = Math.random() * (bodyHeight - btnHeight - 40) + 20;
 
       return { x, y };
     }
 
-    // Function to apply the random position and switch to absolute
+    // Function to apply the random position and change text
     function moveNoButton() {
-        // If it's the first move, switch its position to absolute
+        // Change text to a funny one
+        const randomIndex = Math.floor(Math.random() * funnyTexts.length);
+        noBtn.textContent = funnyTexts[randomIndex];
+        
+        // Button movement logic
         if (!isNoBtnMoved) {
             noBtn.style.position = "absolute";
-            // Get the current position relative to the viewport
             const rect = noBtn.getBoundingClientRect();
             
-            // Set top/left based on current viewport position before moving
             noBtn.style.left = `${rect.left}px`;
             noBtn.style.top = `${rect.top}px`;
             
-            // Append it to the body so it can move anywhere on the screen
+            // Move to body (Important for free movement)
             document.body.appendChild(noBtn);
             isNoBtnMoved = true;
         }
@@ -237,7 +267,7 @@
         noBtn.style.top = `${y}px`;
     }
     
-    // --- Heart Particle Effect Function (unchanged) ---
+    // --- Heart Particle Effect Function ---
     function createHeartParticle() {
         const heart = document.createElement('div');
         heart.innerHTML = '❤️'; 
@@ -263,8 +293,7 @@
     
     let heartInterval = setInterval(createHeartParticle, 300); 
 
-    // **FIX APPLIED HERE:** // The moveNoButton logic is now only triggered by mouseover and click events.
-    
+    // Event listeners
     noBtn.addEventListener("mouseover", moveNoButton);
     noBtn.addEventListener("click", (e) => {
         e.stopPropagation(); 
@@ -272,12 +301,14 @@
     });
 
     yesBtn.addEventListener("click", () => {
+      // Stop hearts and timer
       clearInterval(heartInterval);
       
       document.body.style.transition = "opacity 1s";
       document.body.style.opacity = "0";
       
       setTimeout(() => {
+        // Redirect to success page
         window.location.href = "yes.html"; 
       }, 1000); 
     });
