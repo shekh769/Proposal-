@@ -54,8 +54,8 @@
       border-right: .15em solid var(--pink-color); 
       letter-spacing: .10em; 
       width: 0;
-      /* Increased Glow */
-      text-shadow: 0 0 15px var(--glow-color), 0 0 30px var(--pink-color), 0 0 45px var(--glow-color);
+      /* फिक्स किया गया ग्लो: blur-radius को बढ़ाया गया ताकि यह फैल जाए और बॉक्स जैसा न दिखे */
+      text-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--pink-color), 0 0 40px var(--glow-color), 0 0 60px var(--pink-color);
       transition: text-shadow 0.5s ease;
     }
     
