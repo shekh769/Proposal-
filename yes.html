@@ -3,18 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>She said Yes </title>
+  <title>She said Yes ❤️</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --celebration-color: #ff4d6d;
-      --glow-color: #ffb3c1;
+      /* Even Stronger and Romantic Glow Colors */
+      --celebration-color: #ff4d6d; /* Deep Pink/Red */
+      --glow-color: #ffb3c1; /* Bright Pink */
+      --text-glow-extra: #ffffff; /* White for a sharper highlight */
+    }
+
+    /* Gradient Background for Creativity */
+    @keyframes backgroundShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
     }
 
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #000;
+      background: linear-gradient(-45deg, #000000, #1c000d, #38001a);
+      background-size: 400% 400%;
+      animation: backgroundShift 15s ease infinite; /* Slow, shifting gradient */
+      
       color: #fff;
       text-align: center;
       padding: 20px;
@@ -23,10 +35,10 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      overflow: hidden; /* Hide particles overflow */
+      overflow: hidden;
       box-sizing: border-box;
       opacity: 0;
-      animation: fadeIn 3s ease-in-out forwards; /* Slow, dramatic fade in */
+      animation: fadeIn 3s ease-in-out forwards;
       position: relative; 
     }
 
@@ -35,27 +47,69 @@
       to { opacity: 1; }
     }
 
+    /* I LOVE YOU TOO - New Top Heading */
     h1 {
-      /* Heading Glow and Animation */
-      font-family: 'Dancing Script', cursive;
-      color: var(--celebration-color);
-      font-size: 4em; /* Bigger font size */
-      margin-bottom: 15px;
-      text-shadow: 0 0 15px var(--glow-color), 0 0 30px var(--celebration-color);
-      animation: pulse 2s infinite alternate; /* Pulsing effect for excitement */
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      font-size: 2.5em; 
+      margin-bottom: 5px; 
+      /* Increased Glow Effect */
+      text-shadow: 0 0 15px var(--text-glow-extra), 
+                   0 0 30px var(--glow-color),
+                   0 0 45px rgba(255, 255, 255, 0.5);
+      animation: pulse 1.5s infinite alternate; /* Simple pulse for glow */
+      z-index: 10;
+    }
+    
+    /* Heartbeat Animation for I Love You Too Text */
+    @keyframes pulse {
+        from { transform: scale(1); opacity: 0.9; }
+        to { transform: scale(1.03); opacity: 1; }
     }
 
-    @keyframes pulse {
-      from { transform: scale(1); }
-      to { transform: scale(1.05); }
+    /* SHE SAID YES! */
+    h2 {
+      /* Extra Strong Heading Glow */
+      font-family: 'Dancing Script', cursive;
+      color: var(--celebration-color);
+      font-size: 5.5em; /* Even Bigger font size */
+      margin-top: 5px; 
+      margin-bottom: 5px; 
+      /* Increased Glow Effect */
+      text-shadow: 0 0 25px var(--glow-color), 
+                   0 0 50px var(--celebration-color), 
+                   0 0 80px var(--glow-color); 
+      animation: shimmer 2s infinite alternate; 
+      line-height: 1; /* Keep lines close */
+      z-index: 10;
+    }
+
+    /* Shimmer Effect for She Said Yes */
+    @keyframes shimmer {
+        0% { text-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--celebration-color); }
+        100% { text-shadow: 0 0 30px var(--glow-color), 0 0 60px var(--celebration-color); }
+    }
+
+
+    /* Style for the central heart - Now below SHE SAID YES */
+    .central-heart {
+        font-size: 4em;
+        margin: 10px 0 20px 0; /* Space below the heart */
+        text-shadow: 0 0 15px var(--glow-color), 0 0 30px var(--celebration-color);
+        animation: heartBeat 1s infinite alternate;
+        z-index: 10;
+    }
+
+    @keyframes heartBeat {
+        from { transform: scale(1); }
+        to { transform: scale(1.1); }
     }
 
     p {
-      font-size: 1.2em;
+      font-size: 1.3em;
       margin-top: 20px;
       color: #ccc;
-      /* Subtle text glow */
-      text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); 
       z-index: 10;
       position: relative;
     }
@@ -69,17 +123,17 @@
       height: 100%;
       pointer-events: none;
       overflow: hidden;
-      z-index: 1; /* Below the text */
+      z-index: 1;
     }
     
     /* Heart drop/fall animation */
     @keyframes drop {
       0% {
-        transform: translateY(-10vh) rotate(0deg) scale(0.5);
+        transform: translateY(-10vh) rotate(0deg) scale(0.6); 
         opacity: 1;
       }
       100% {
-        transform: translateY(100vh) rotate(720deg) scale(0.1);
+        transform: translateY(100vh) rotate(720deg) scale(0.2); 
         opacity: 0;
       }
     }
@@ -89,8 +143,8 @@
     
   <div class="confetti-box" id="confettiBox"></div>
 
-  <h1>She Said YES!❤️ </h1>
-  <p>
+  <h1>I Love You Too! 🥰</h1> <h2>She Said YES!</h2> 
+  <div class="central-heart">💖</div> <p>
     Ab lagta hai duaayein qubool ho gayi💖,<br>
     jise chaaha tha dil se, wo ab meri ho gayi💐 
   </p>
@@ -106,29 +160,25 @@
     // Function to create a heart/confetti particle
     function createConfetti() {
         const confetti = document.createElement('div');
-        confetti.innerHTML = '✨'; // Star or Heart
         
-        // Randomly choose between heart, star, or diamond
-        const symbols = ['', '❤️', '✨', '']; 
+        // Symbols with high frequency of hearts/stars
+        const symbols = ['❤️', '✨', '💖', '⭐', '✨', '❤️', '💕', '💫']; 
         confetti.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
         
         confetti.style.position = 'absolute';
-        confetti.style.fontSize = `${Math.random() * 20 + 15}px`; // Larger confetti
-        confetti.style.color = Math.random() < 0.5 ? 'var(--celebration-color)' : 'white';
+        confetti.style.fontSize = `${Math.random() * 25 + 20}px`; 
+        confetti.style.color = Math.random() < 0.6 ? 'var(--celebration-color)' : 'white'; /* More celebration color hearts */
         
-        // Start position: Random position from the top
         const startX = Math.random() * document.body.clientWidth;
         
         confetti.style.left = `${startX}px`;
-        confetti.style.top = '-10vh'; // Start above the screen
+        confetti.style.top = '-10vh'; 
         
-        // Randomize animation duration, delay, and rotation
         const duration = Math.random() * 8 + 4; // 4s to 12s
-        const delay = Math.random() * 2; // 0s to 2s delay
+        const delay = Math.random() * 0.5; // Very small delay for a continuous feel
         
         confetti.style.animation = `drop ${duration}s linear ${delay}s forwards`;
         
-        // Remove the confetti after animation ends
         setTimeout(() => {
             confetti.remove();
         }, (duration + delay) * 1000); 
@@ -136,19 +186,19 @@
         confettiBox.appendChild(confetti);
     }
     
-    // Start generating confetti rapidly for the first few seconds
+    // --- Initial Burst & Continuous Stream Logic ---
     let confettiBurst = 0;
     const burstInterval = setInterval(() => {
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 15; i++) { // Massive initial burst
             createConfetti();
         }
         confettiBurst++;
-        if (confettiBurst > 20) { // Stop the initial burst after 20 cycles (100 particles)
+        if (confettiBurst > 20) { // Stop initial burst quickly
             clearInterval(burstInterval);
-            // After the burst, keep a slower, continuous stream
-            setInterval(createConfetti, 500); 
+            // Continuous, rapid stream
+            setInterval(createConfetti, 100); 
         }
-    }, 100); 
+    }, 50); // Very fast burst interval
 
   </script>
 </body>
