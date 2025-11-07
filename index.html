@@ -10,13 +10,13 @@
     :root {
       --pink-color: #ff4d6d;
       --glow-color: #ffb3c1;
-      /* New Romantic Background Color */
-      --new-bg-color: #1a032d; 
+      /* New Dark Romantic Purple/Pink Background Color */
+      --new-bg-color: #2e004d; 
     }
 
     body {
       font-family: 'Poppins', sans-serif;
-      /* Background Color Changed to a Deep, Romantic Shade */
+      /* Background Color Changed */
       background-color: var(--new-bg-color); 
       color: #fff;
       text-align: center;
@@ -54,7 +54,8 @@
       border-right: .15em solid var(--pink-color); 
       letter-spacing: .10em; 
       width: 0;
-      text-shadow: 0 0 10px var(--pink-color), 0 0 20px var(--pink-color);
+      /* Increased Glow */
+      text-shadow: 0 0 15px var(--glow-color), 0 0 30px var(--pink-color), 0 0 45px var(--glow-color);
       transition: text-shadow 0.5s ease;
     }
     
@@ -88,6 +89,8 @@
       margin: 10px auto 20px auto;
       color: #ccc;
       max-width: 90%; 
+      /* Added Subtle Glow */
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
     }
 
     .timer {
@@ -174,14 +177,13 @@
       .buttons { height: 100px; }
     }
     
-    /* Animation updated to ensure hearts start from the bottom and go all the way up */
     @keyframes rise {
       0% { 
-          transform: translateY(0) scale(0.8); /* Start from bottom (0) */
+          transform: translateY(0) scale(0.8); 
           opacity: 1; 
       }
       100% { 
-          transform: translateY(-100vh) scale(0); /* Go all the way to the top (-100vh) */
+          transform: translateY(-100vh) scale(0); 
           opacity: 0; 
       }
     }
@@ -209,8 +211,8 @@
       </div>
 
       <p>
-        Fizao mein Mehka sham ho tum,<br>
-        Pyaar mein Jhalakta Jaam ho tum,<br>
+        Fizao mein Mehka sham ho tum ✨,<br>
+        Pyaar mein Jhalakta Jaam ho tum 🌙,<br>
         Seene mein Chhupaye phirte hain hum tumhari yaadein,<br>
         Is liye meri Zindagi ka doosra naam ho tum 💖
       </p>
@@ -276,9 +278,7 @@
             mainContent.style.opacity = '1';
             body.classList.add('playing');
 
-            // ** HEART INTENSITY INCREASED HERE **
-            // Changed interval from 300ms to 100ms (3x the intensity)
-            // This makes hearts appear much more frequently.
+            // Heart Intensity is high (100ms interval)
             heartInterval = setInterval(createHeartParticle, 100); 
 
         }, 500);
@@ -324,7 +324,6 @@
     // --- Heart Particle Effect Function ---
     function createHeartParticle() {
         const heart = document.createElement('div');
-        // Increased variety of heart/love symbols
         const symbols = ['❤️', '💖', '✨', '💕', '💫']; 
         heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
         
@@ -336,7 +335,7 @@
         heart.style.left = `${startX}px`;
         heart.style.bottom = '0px'; 
         
-        const duration = Math.random() * 5 + 4; // Slightly longer duration to help reach the top
+        const duration = Math.random() * 5 + 4; 
         const delay = Math.random() * 1; 
         
         heart.style.animation = `rise ${duration}s linear ${delay}s infinite`;
