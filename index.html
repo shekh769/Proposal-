@@ -10,11 +10,14 @@
     :root {
       --pink-color: #ff4d6d;
       --glow-color: #ffb3c1;
+      /* New Romantic Background Color */
+      --new-bg-color: #1a032d; 
     }
 
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #111;
+      /* Background Color Changed to a Deep, Romantic Shade */
+      background-color: var(--new-bg-color); 
       color: #fff;
       text-align: center;
       padding: 20px;
@@ -25,7 +28,6 @@
       align-items: center;
       overflow: hidden;
       box-sizing: border-box;
-      /* Animation now starts after the 'start' button click for a better user experience */
       opacity: 0;
       transition: opacity 1.5s ease-in-out;
       position: relative; 
@@ -52,8 +54,6 @@
       border-right: .15em solid var(--pink-color); 
       letter-spacing: .10em; 
       width: 0;
-      /* Typing animation will be added by JS after the start click */
-      
       text-shadow: 0 0 10px var(--pink-color), 0 0 20px var(--pink-color);
       transition: text-shadow 0.5s ease;
     }
@@ -174,9 +174,16 @@
       .buttons { height: 100px; }
     }
     
+    /* Animation updated to ensure hearts start from the bottom and go all the way up */
     @keyframes rise {
-      0% { transform: translateY(0) scale(1); opacity: 0.8; }
-      100% { transform: translateY(-100vh) scale(0); opacity: 0; }
+      0% { 
+          transform: translateY(0) scale(0.8); /* Start from bottom (0) */
+          opacity: 1; 
+      }
+      100% { 
+          transform: translateY(-100vh) scale(0); /* Go all the way to the top (-100vh) */
+          opacity: 0; 
+      }
     }
   </style>
 </head>
@@ -187,7 +194,7 @@
     Your browser does not support the audio element.
   </audio>
   
-  <div id="playOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #111; z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: opacity 0.5s; opacity: 1;">
+  <div id="playOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--new-bg-color); z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: opacity 0.5s; opacity: 1;">
     <button id="startButton" style="padding: 15px 30px; font-size: 18px; background: var(--pink-color); color: white; border: none; border-radius: 30px; font-weight: bold; box-shadow: 0 0 20px var(--pink-color);">
         Tap to Start the Magic ✨
     </button>
@@ -246,39 +253,35 @@
     
     // --- Initial setup: Make main content ready to fade in ---
     document.addEventListener('DOMContentLoaded', () => {
-        // Hide main content until start button is clicked
         mainContent.style.opacity = 0;
         mainContent.style.visibility = 'hidden';
-        
-        // Ensure body starts faded in (only the overlay is visible)
         body.style.opacity = 1;
     });
 
     // --- AUTOPLAY FIX AND START LOGIC ---
     startButton.addEventListener('click', () => {
-        // 1. Attempt to play audio
         audio.play().then(() => {
             console.log("Audio started successfully.");
         }).catch(error => {
             console.log("Audio play failed, continuing without music.", error);
         });
 
-        // 2. Hide the overlay smoothly
         playOverlay.style.opacity = '0';
         
         setTimeout(() => {
             playOverlay.style.display = 'none';
-            playOverlay.remove(); // Remove overlay completely to ensure no blocking
+            playOverlay.remove();
 
-            // 3. Show main content and start animations/effects
             mainContent.style.visibility = 'visible';
             mainContent.style.opacity = '1';
-            body.classList.add('playing'); // Add class to trigger typing animation
-            
-            // 4. Start heart particles
-            heartInterval = setInterval(createHeartParticle, 300); 
+            body.classList.add('playing');
 
-        }, 500); // 500ms delay for the fade-out transition
+            // ** HEART INTENSITY INCREASED HERE **
+            // Changed interval from 300ms to 100ms (3x the intensity)
+            // This makes hearts appear much more frequently.
+            heartInterval = setInterval(createHeartParticle, 100); 
+
+        }, 500);
     });
     // --- AUTOPLAY FIX END ---
 
@@ -290,6 +293,7 @@
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
 
+      // Ensure button stays within visible bounds
       const x = Math.random() * (bodyWidth - btnWidth - 40) + 20;
       const y = Math.random() * (bodyHeight - btnHeight - 40) + 20;
 
@@ -320,7 +324,10 @@
     // --- Heart Particle Effect Function ---
     function createHeartParticle() {
         const heart = document.createElement('div');
-        heart.innerHTML = '❤️'; 
+        // Increased variety of heart/love symbols
+        const symbols = ['❤️', '💖', '✨', '💕', '💫']; 
+        heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+        
         heart.style.position = 'absolute';
         heart.style.fontSize = `${Math.random() * 15 + 10}px`; 
         
@@ -329,8 +336,8 @@
         heart.style.left = `${startX}px`;
         heart.style.bottom = '0px'; 
         
-        const duration = Math.random() * 5 + 3; 
-        const delay = Math.random() * 2; 
+        const duration = Math.random() * 5 + 4; // Slightly longer duration to help reach the top
+        const delay = Math.random() * 1; 
         
         heart.style.animation = `rise ${duration}s linear ${delay}s infinite`;
         
@@ -365,5 +372,3 @@
 
 </body>
 </html>
-
-
