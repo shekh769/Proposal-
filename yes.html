@@ -15,7 +15,7 @@
       --text-glow-extra: #ffffff; /* White for a sharper highlight */
     }
 
-    /* Background Gradient Animation - Fixed to smoothly change colors */
+    /* Background Gradient Animation */
     @keyframes backgroundShift {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
@@ -49,16 +49,16 @@
       to { opacity: 1; }
     }
 
-    /* I LOVE YOU TOO - Top Heading with Animation and Bold Font */
+    /* I LOVE YOU TOO - Font Corrected to Poppins */
     h1 {
-      font-family: 'Poppins', sans-serif; 
+      font-family: 'Poppins', sans-serif; /* Corrected Font */
       font-weight: 900; /* Bold */
       color: #fff;
-      font-size: 3.5em; /* Large size */
+      font-size: 3.5em; 
       margin-bottom: 5px; 
       margin-top: -50px; /* Shifted up slightly */
       
-      /* Increased Glow Effect */
+      /* Glow Effect */
       text-shadow: 0 0 10px #ffffff, 
                    0 0 25px var(--glow-color),
                    0 0 40px var(--text-glow-extra);
@@ -82,7 +82,7 @@
     }
 
 
-    /* SHE SAID YES! - Kept original celebratory font */
+    /* SHE SAID YES! - Kept original celebratory font and size */
     h2 {
       font-family: 'Dancing Script', cursive; 
       color: var(--celebration-color);
@@ -120,7 +120,7 @@
 
     /* Custom Text Size and Glow */
     p {
-      font-size: 1.5em; /* Made bigger */
+      font-size: 1.5em; 
       margin-top: 20px;
       color: #ccc;
       text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); 
@@ -136,7 +136,6 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      overflow: hidden;
       z-index: 1;
     }
     
@@ -158,8 +157,11 @@
   <div class="confetti-box" id="confettiBox"></div>
 
   <h1>❤️ I Love You Too! ❤️</h1> 
-  <div class="central-hearts-container">💖</div> <h2>She Said YES!</h2> 
-  <div class="central-hearts-container">💖</div> <p>
+  <div class="central-hearts-container">💖</div> 
+  <h2>She Said YES!</h2> 
+  <div class="central-hearts-container">💖</div> 
+
+  <p>
     Ab lagta hai duaayein qubool ho gayi💖,<br>
     jise chaaha tha dil se, wo ab meri ho gayi💐 
   </p>
@@ -179,7 +181,7 @@
         confetti.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
         
         confetti.style.position = 'absolute';
-        confetti.style.fontSize = `${Math.random() * 25 + 20}px`; 
+        confetti.style.fontSize = `${Math.random() * 20 + 15}px`; /* Slightly smaller size for performance */
         confetti.style.color = Math.random() < 0.6 ? 'var(--celebration-color)' : 'white'; 
         
         const startX = Math.random() * document.body.clientWidth;
@@ -187,7 +189,7 @@
         confetti.style.left = `${startX}px`;
         confetti.style.top = '-10vh'; 
         
-        const duration = Math.random() * 8 + 4; 
+        const duration = Math.random() * 6 + 4; /* Shorter duration for faster fall */
         const delay = Math.random() * 0.1; 
         
         confetti.style.animation = `drop ${duration}s linear ${delay}s forwards`;
@@ -199,19 +201,20 @@
         confettiBox.appendChild(confetti);
     }
     
-    // --- Initial Rapid Burst Logic ---
+    // --- Initial Rapid Burst Logic (Optimized for performance) ---
+    // The initial burst is still fast, but the continuous stream is slower to prevent lag.
     let confettiBurst = 0;
     const burstInterval = setInterval(() => {
-        for (let i = 0; i < 25; i++) { /* Ultra Massive Initial Burst */
+        for (let i = 0; i < 15; i++) { /* Large burst */
             createConfetti();
         }
         confettiBurst++;
-        if (confettiBurst > 15) { 
+        if (confettiBurst > 10) { /* Stop initial burst quickly */
             clearInterval(burstInterval);
-            // Continuous, very fast stream
-            setInterval(createConfetti, 50); /* Extremely fast continuous drop */
+            // Continuous, but SLIGHTLY slower stream to prevent lag
+            setInterval(createConfetti, 100); 
         }
-    }, 10); /* Ultra fast burst interval */
+    }, 50); /* Fast burst interval */
 
   </script>
 </body>
