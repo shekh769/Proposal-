@@ -10,9 +10,9 @@
   <style>
     :root {
       /* Stronger and Romantic Glow Colors */
-      --celebration-color: #ff4d6d; /* Deep Pink/Red */
-      --glow-color: #ffb3c1; /* Bright Pink */
-      --text-glow-extra: #ffffff; /* White for a sharper highlight */
+      --celebration-color: #ff4d6d;
+      --glow-color: #ffb3c1;
+      --text-glow-extra: #ffffff;
     }
 
     /* Background Gradient Animation */
@@ -24,14 +24,13 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      /* Background: Deep romantic gradient */
       background: linear-gradient(-45deg, #0a0014, #1c000d, #38001a, #1a002a);
       background-size: 400% 400%;
-      animation: backgroundShift 25s ease infinite; /* Slow, continuous shift */
+      animation: backgroundShift 25s ease infinite;
       
       color: #fff;
       text-align: center;
-      padding: 20px;
+      padding: 10px; /* Reduced padding for mobile */
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -49,62 +48,47 @@
       to { opacity: 1; }
     }
 
-    /* I LOVE YOU TOO - Font Corrected to Poppins */
+    /* I LOVE YOU TOO - Desktop Styles */
     h1 {
-      font-family: 'Poppins', sans-serif; /* Corrected Font */
-      font-weight: 900; /* Bold */
+      font-family: 'Poppins', sans-serif;
+      font-weight: 900;
       color: #fff;
-      font-size: 3.5em; 
+      font-size: 3.5em; /* Desktop Size */
       margin-bottom: 5px; 
-      margin-top: -50px; /* Shifted up slightly */
-      
-      /* Glow Effect */
-      text-shadow: 0 0 10px #ffffff, 
-                   0 0 25px var(--glow-color),
-                   0 0 40px var(--text-glow-extra);
-      
-      /* Animation: Fade in and Slide down gently (धीरे-धीरे खुले) */
+      margin-top: -50px; 
+      /* Glow and Animation styles remain the same for effect */
+      text-shadow: 0 0 10px #ffffff, 0 0 25px var(--glow-color), 0 0 40px var(--text-glow-extra);
       opacity: 0;
       transform: translateY(-20px);
-      animation:
-        slideDownFadeIn 2s ease-out 0.5s forwards, 
-        pulseGlow 1.5s infinite alternate 2.5s; 
+      animation: slideDownFadeIn 2s ease-out 0.5s forwards, pulseGlow 1.5s infinite alternate 2.5s;
       z-index: 10;
     }
     
-    @keyframes slideDownFadeIn {
-        to { opacity: 1; transform: translateY(0); }
-    }
-    
-    @keyframes pulseGlow {
-        from { opacity: 0.9; }
-        to { opacity: 1; }
-    }
-
-
-    /* SHE SAID YES! - Kept original celebratory font and size */
+    /* SHE SAID YES! - Desktop Styles */
     h2 {
       font-family: 'Dancing Script', cursive; 
       color: var(--celebration-color);
-      font-size: 5.5em; 
+      font-size: 5.5em; /* Desktop Size */
       margin-top: 5px; 
       margin-bottom: 5px; 
-      /* Strongest Glow Effect */
-      text-shadow: 0 0 30px var(--glow-color), 
-                   0 0 60px var(--celebration-color), 
-                   0 0 90px var(--glow-color); 
+      /* Glow and Animation styles remain the same for effect */
+      text-shadow: 0 0 30px var(--glow-color), 0 0 60px var(--celebration-color), 0 0 90px var(--glow-color); 
       animation: shimmer 2s infinite alternate; 
       line-height: 1; 
       z-index: 10;
     }
 
-    @keyframes shimmer {
-        0% { text-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--celebration-color); }
-        100% { text-shadow: 0 0 40px var(--glow-color), 0 0 80px var(--celebration-color); }
+    /* Custom Text Size and Glow - Desktop Styles */
+    p {
+      font-size: 1.5em; /* Desktop Size */
+      margin-top: 20px;
+      color: #ccc;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); 
+      z-index: 10;
+      position: relative;
     }
-
-
-    /* Style for the central hearts */
+    
+    /* Heart Size - Desktop Styles */
     .central-hearts-container {
         font-size: 4em;
         margin: 10px 0 20px 0; 
@@ -113,42 +97,57 @@
         z-index: 10;
     }
 
+    /* ****************************************************** */
+    /* MEDIA QUERY FOR MOBILE DEVICES           */
+    /* ****************************************************** */
+    @media (max-width: 600px) {
+        
+        /* I LOVE YOU TOO - Mobile Size */
+        h1 {
+            font-size: 2.2em; /* Smaller for mobile */
+            margin-top: -30px; /* Adjusted position for smaller screen */
+        }
+
+        /* SHE SAID YES! - Mobile Size */
+        h2 {
+            font-size: 3.5em; /* Smaller for mobile */
+        }
+
+        /* Heart Size - Mobile Size */
+        .central-hearts-container {
+            font-size: 2.5em; /* Smaller hearts */
+            margin: 5px 0 10px 0;
+        }
+
+        /* Custom Text Size - Mobile Size */
+        p {
+            font-size: 1.1em; /* Smaller base text */
+            margin-top: 15px;
+        }
+    }
+
+    /* Remaining common CSS and Keyframes */
+    @keyframes slideDownFadeIn {
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulseGlow {
+        from { opacity: 0.9; }
+        to { opacity: 1; }
+    }
+    @keyframes shimmer {
+        0% { text-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--celebration-color); }
+        100% { text-shadow: 0 0 40px var(--glow-color), 0 0 80px var(--celebration-color); }
+    }
     @keyframes heartBeat {
         from { transform: scale(1); }
         to { transform: scale(1.1); }
     }
-
-    /* Custom Text Size and Glow */
-    p {
-      font-size: 1.5em; 
-      margin-top: 20px;
-      color: #ccc;
-      text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); 
-      z-index: 10;
-      position: relative;
-    }
-
-    /* --- Confetti/Heart Particle Container --- */
     .confetti-box {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;
     }
-    
-    /* Heart drop/fall animation */
     @keyframes drop {
-      0% {
-        transform: translateY(-10vh) rotate(0deg) scale(0.6); 
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(720deg) scale(0.2); 
-        opacity: 0;
-      }
+      0% { transform: translateY(-10vh) rotate(0deg) scale(0.6); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg) scale(0.2); opacity: 0; }
     }
   </style>
 </head>
@@ -176,12 +175,11 @@
     
     function createConfetti() {
         const confetti = document.createElement('div');
-        
         const symbols = ['❤️', '✨', '💖', '⭐', '✨', '❤️', '💕', '💫']; 
         confetti.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
         
         confetti.style.position = 'absolute';
-        confetti.style.fontSize = `${Math.random() * 20 + 15}px`; /* Slightly smaller size for performance */
+        confetti.style.fontSize = `${Math.random() * 20 + 15}px`; 
         confetti.style.color = Math.random() < 0.6 ? 'var(--celebration-color)' : 'white'; 
         
         const startX = Math.random() * document.body.clientWidth;
@@ -189,7 +187,7 @@
         confetti.style.left = `${startX}px`;
         confetti.style.top = '-10vh'; 
         
-        const duration = Math.random() * 6 + 4; /* Shorter duration for faster fall */
+        const duration = Math.random() * 6 + 4; 
         const delay = Math.random() * 0.1; 
         
         confetti.style.animation = `drop ${duration}s linear ${delay}s forwards`;
@@ -202,19 +200,18 @@
     }
     
     // --- Initial Rapid Burst Logic (Optimized for performance) ---
-    // The initial burst is still fast, but the continuous stream is slower to prevent lag.
     let confettiBurst = 0;
     const burstInterval = setInterval(() => {
-        for (let i = 0; i < 15; i++) { /* Large burst */
+        for (let i = 0; i < 15; i++) { 
             createConfetti();
         }
         confettiBurst++;
-        if (confettiBurst > 10) { /* Stop initial burst quickly */
+        if (confettiBurst > 10) { 
             clearInterval(burstInterval);
             // Continuous, but SLIGHTLY slower stream to prevent lag
             setInterval(createConfetti, 100); 
         }
-    }, 50); /* Fast burst interval */
+    }, 50);
 
   </script>
 </body>
