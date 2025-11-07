@@ -30,7 +30,7 @@
       
       color: #fff;
       text-align: center;
-      padding: 10px; /* Reduced padding for mobile */
+      padding: 10px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -48,33 +48,33 @@
       to { opacity: 1; }
     }
 
-    /* I LOVE YOU TOO - Desktop Styles */
+    /* SHE SAID YES! (Now the Top Element - uses h1 for prominence) */
     h1 {
+      font-family: 'Dancing Script', cursive; 
+      color: var(--celebration-color);
+      font-size: 5.5em; /* Desktop Size */
+      margin-bottom: 5px; 
+      margin-top: -50px; /* Adjusted to top */
+      /* Strongest Glow Effect */
+      text-shadow: 0 0 30px var(--glow-color), 0 0 60px var(--celebration-color), 0 0 90px var(--glow-color); 
+      animation: shimmer 2s infinite alternate; 
+      line-height: 1; 
+      z-index: 10;
+    }
+    
+    /* I LOVE YOU TOO (Now the Second Element - uses h2) */
+    h2 {
       font-family: 'Poppins', sans-serif;
       font-weight: 900;
       color: #fff;
       font-size: 3.5em; /* Desktop Size */
-      margin-bottom: 5px; 
-      margin-top: -50px; 
-      /* Glow and Animation styles remain the same for effect */
-      text-shadow: 0 0 10px #ffffff, 0 0 25px var(--glow-color), 0 0 40px var(--text-glow-extra);
-      opacity: 0;
-      transform: translateY(-20px);
-      animation: slideDownFadeIn 2s ease-out 0.5s forwards, pulseGlow 1.5s infinite alternate 2.5s;
-      z-index: 10;
-    }
-    
-    /* SHE SAID YES! - Desktop Styles */
-    h2 {
-      font-family: 'Dancing Script', cursive; 
-      color: var(--celebration-color);
-      font-size: 5.5em; /* Desktop Size */
       margin-top: 5px; 
       margin-bottom: 5px; 
       /* Glow and Animation styles remain the same for effect */
-      text-shadow: 0 0 30px var(--glow-color), 0 0 60px var(--celebration-color), 0 0 90px var(--glow-color); 
-      animation: shimmer 2s infinite alternate; 
-      line-height: 1; 
+      text-shadow: 0 0 10px var(--text-glow-extra), 0 0 25px var(--glow-color), 0 0 40px var(--text-glow-extra);
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: slideDownFadeIn 2s ease-out 0.5s forwards, pulseGlow 1.5s infinite alternate 2.5s;
       z-index: 10;
     }
 
@@ -102,26 +102,26 @@
     /* ****************************************************** */
     @media (max-width: 600px) {
         
-        /* I LOVE YOU TOO - Mobile Size */
+        /* SHE SAID YES! - Mobile Size */
         h1 {
-            font-size: 2.2em; /* Smaller for mobile */
-            margin-top: -30px; /* Adjusted position for smaller screen */
+            font-size: 3.5em; /* Smaller for mobile */
+            margin-top: -30px; 
         }
 
-        /* SHE SAID YES! - Mobile Size */
+        /* I LOVE YOU TOO - Mobile Size */
         h2 {
-            font-size: 3.5em; /* Smaller for mobile */
+            font-size: 2.2em; /* Smaller for mobile */
         }
 
         /* Heart Size - Mobile Size */
         .central-hearts-container {
-            font-size: 2.5em; /* Smaller hearts */
+            font-size: 2.5em;
             margin: 5px 0 10px 0;
         }
 
         /* Custom Text Size - Mobile Size */
         p {
-            font-size: 1.1em; /* Smaller base text */
+            font-size: 1.1em;
             margin-top: 15px;
         }
     }
@@ -155,9 +155,10 @@
     
   <div class="confetti-box" id="confettiBox"></div>
 
-  <h1>❤️ I Love You Too! ❤️</h1> 
+  <h1>She Said YES!</h1> 
   <div class="central-hearts-container">💖</div> 
-  <h2>She Said YES!</h2> 
+  
+  <h2>❤️ I Love You Too! ❤️</h2> 
   <div class="central-hearts-container">💖</div> 
 
   <p>
