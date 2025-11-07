@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>She said Yes ❤️</title>
   
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      /* Even Stronger and Romantic Glow Colors */
+      /* Stronger and Romantic Glow Colors */
       --celebration-color: #ff4d6d; /* Deep Pink/Red */
       --glow-color: #ffb3c1; /* Bright Pink */
       --text-glow-extra: #ffffff; /* White for a sharper highlight */
     }
 
-    /* Background Gradient Animation - Fixed to cycle properly */
+    /* Background Gradient Animation - Fixed to smoothly change colors */
     @keyframes backgroundShift {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
@@ -24,10 +24,10 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      /* Adjusted gradient for a deeper, more noticeable shift */
+      /* Background: Deep romantic gradient */
       background: linear-gradient(-45deg, #0a0014, #1c000d, #38001a, #1a002a);
       background-size: 400% 400%;
-      animation: backgroundShift 20s ease infinite; /* Slower, noticeable shift */
+      animation: backgroundShift 25s ease infinite; /* Slow, continuous shift */
       
       color: #fff;
       text-align: center;
@@ -49,25 +49,26 @@
       to { opacity: 1; }
     }
 
-    /* I LOVE YOU TOO - Top Heading with New Font and Animation */
+    /* I LOVE YOU TOO - Top Heading with Animation and Bold Font */
     h1 {
-      /* New Proposal Type Font: Great Vibes (cursive and elegant) */
-      font-family: 'Great Vibes', cursive; 
-      font-weight: 900; /* Made Bold */
+      font-family: 'Poppins', sans-serif; 
+      font-weight: 900; /* Bold */
       color: #fff;
-      font-size: 4.5em; /* Made much bigger */
+      font-size: 3.5em; /* Large size */
       margin-bottom: 5px; 
-      /* Increased and Specific Glow Effect */
+      margin-top: -50px; /* Shifted up slightly */
+      
+      /* Increased Glow Effect */
       text-shadow: 0 0 10px #ffffff, 
                    0 0 25px var(--glow-color),
                    0 0 40px var(--text-glow-extra);
       
-      /* Animation: Fade in and Slide down gently */
+      /* Animation: Fade in and Slide down gently (धीरे-धीरे खुले) */
       opacity: 0;
       transform: translateY(-20px);
       animation:
-        slideDownFadeIn 2s ease-out 0.5s forwards, /* Opens slowly */
-        pulseGlow 1.5s infinite alternate 2.5s; /* Starts pulsing after opening */
+        slideDownFadeIn 2s ease-out 0.5s forwards, 
+        pulseGlow 1.5s infinite alternate 2.5s; 
       z-index: 10;
     }
     
@@ -81,9 +82,8 @@
     }
 
 
-    /* SHE SAID YES! */
+    /* SHE SAID YES! - Kept original celebratory font */
     h2 {
-      /* Keep 'Dancing Script' for a celebratory feel */
       font-family: 'Dancing Script', cursive; 
       color: var(--celebration-color);
       font-size: 5.5em; 
@@ -104,8 +104,8 @@
     }
 
 
-    /* Style for the central heart */
-    .central-heart {
+    /* Style for the central hearts */
+    .central-hearts-container {
         font-size: 4em;
         margin: 10px 0 20px 0; 
         text-shadow: 0 0 15px var(--glow-color), 0 0 30px var(--celebration-color);
@@ -118,9 +118,9 @@
         to { transform: scale(1.1); }
     }
 
-    /* Custom Text Size */
+    /* Custom Text Size and Glow */
     p {
-      font-size: 1.4em; /* Slightly bigger than before */
+      font-size: 1.5em; /* Made bigger */
       margin-top: 20px;
       color: #ccc;
       text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); 
@@ -158,10 +158,8 @@
   <div class="confetti-box" id="confettiBox"></div>
 
   <h1>❤️ I Love You Too! ❤️</h1> 
-  <h2>She Said YES!</h2> 
-  <div class="central-heart">💖</div> 
-
-  <p>
+  <div class="central-hearts-container">💖</div> <h2>She Said YES!</h2> 
+  <div class="central-hearts-container">💖</div> <p>
     Ab lagta hai duaayein qubool ho gayi💖,<br>
     jise chaaha tha dil se, wo ab meri ho gayi💐 
   </p>
@@ -190,7 +188,7 @@
         confetti.style.top = '-10vh'; 
         
         const duration = Math.random() * 8 + 4; 
-        const delay = Math.random() * 0.1; /* Minimal delay for fast effect */
+        const delay = Math.random() * 0.1; 
         
         confetti.style.animation = `drop ${duration}s linear ${delay}s forwards`;
         
@@ -204,16 +202,16 @@
     // --- Initial Rapid Burst Logic ---
     let confettiBurst = 0;
     const burstInterval = setInterval(() => {
-        for (let i = 0; i < 20; i++) { /* Ultra massive initial burst for 'Boom' effect */
+        for (let i = 0; i < 25; i++) { /* Ultra Massive Initial Burst */
             createConfetti();
         }
         confettiBurst++;
-        if (confettiBurst > 15) { /* Stop initial burst quickly (15 cycles * 20 particles = 300 fast particles) */
+        if (confettiBurst > 15) { 
             clearInterval(burstInterval);
-            // Continuous, slightly slower stream
-            setInterval(createConfetti, 70); /* Very frequent continuous drop */
+            // Continuous, very fast stream
+            setInterval(createConfetti, 50); /* Extremely fast continuous drop */
         }
-    }, 30); /* Extremely fast burst interval */
+    }, 10); /* Ultra fast burst interval */
 
   </script>
 </body>
