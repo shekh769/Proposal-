@@ -18,4 +18,4 @@ function moveNo() {
   const maxY = window.innerHeight - btnHeight - 20;
   
   // Ensure button never goes out of visible bounds
-  const x = Math.max(10, Math.random() * maxX);
+  const x = Math.max(10, Math.random() * maxX); 
